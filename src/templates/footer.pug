@@ -1,19 +1,19 @@
-if count.all
+if countLabel[0] != 0
     footer(class="footer")
         span(class="todo-count") #{countLabel}
         ul(class="filters")
             li
-                if filter == 'all'
+                if shownFilter == 'all'
                     a(href="/" class="selected") All
                 else
                     a(href="/") All
             li
-                if filter == 'active'
+                if shownFilter == 'active'
                     a(href="/filter/active" class="selected") Active
                 else
                     a(href="/filter/active") Active
             li
-                if filter == 'completed'
+                if shownFilter == 'completed'
                     a(href="/filter/completed" class="selected") Completed
                 else
                     a(href="/filter/completed") Completed

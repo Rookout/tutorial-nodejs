@@ -1,18 +1,20 @@
-const addTodo = () => {
-    const input = $('.new-todo');
-    const title = input.val();
-    $.ajax('/todos', {
-        contentType: "application/json",
-        method: 'POST',
-        data: JSON.stringify({title: title}),
-        dataType: 'json'
-    })
-    .done(function() {
-        location.reload();
-    });
+const onAddTodo = (e) => {
+    if (e.keyCode == 13) { // Enter Key
+        const input = $('.new-todo');
+        const title = input.val();
+        $.ajax('/todos', {
+            contentType: "application/json",
+            method: 'POST',
+            data: JSON.stringify({title: title}),
+            dataType: 'json'
+        })
+        .done(function() {
+            location.reload();
+        });
+    }
 }
 
-const deleteTodo = (e) => {
+const onDeleteTodo = (e) => {
     const todoId = $(e.target.parentElement.parentElement).data('id');
     $.ajax('/todos/' + todoId, {
         method: 'DELETE'
@@ -22,7 +24,7 @@ const deleteTodo = (e) => {
     });
 }
 
-const duplicateTodo = (e) => {
+const onDuplicateTodo = (e) => {
     const todoId = $(e.target.parentElement.parentElement).data('id');
     $.ajax('/todos/duplicate/' + todoId, {
         method: 'POST'
@@ -51,7 +53,7 @@ const sendUpdateRequest = (newData) => {
     });
 }
 
-const updateTodo = (e) => {
+const onUpdateTodo = (e) => {
     if ($(e.target).hasClass('todo-label')) {
         const todoElement = $(e.target.parentElement.parentElement);
         todoElement.addClass('editing');
@@ -78,7 +80,7 @@ const updateTodo = (e) => {
     }
 }
 
-const toggleAll = () => {
+const onToggleAll = () => {
     $.ajax('/todos/toggleall', {
         method: 'POST'
     })
@@ -87,7 +89,7 @@ const toggleAll = () => {
     });
 }
 
-const clearCompleted = () => {
+const onClearCompleted = () => {
     $.ajax('/todos/clear', {
         method: 'POST'
     })

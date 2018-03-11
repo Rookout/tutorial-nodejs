@@ -54,8 +54,8 @@ app.use((err, req, res, next) => {
 });
 
 const start = () => {
-    app.listen(config.port, () => {
-        console.log(`Server Listening on http://localhost:${config.port}/`);
+    app.listen(config.PORT, () => {
+        console.log(`Server Listening on http://localhost:${config.PORT}/`);
     });
 }
 

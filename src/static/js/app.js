@@ -1,17 +1,11 @@
-const newTodoHandler = (e) => {
-    if (e.keyCode == 13) { // Enter Key
-        addTodo();
-    }
-};
-
 const setEventListeners = () => {
-    $('.new-todo').on('keypress', newTodoHandler);
-    $('.destroy').on('click', deleteTodo);
-    $('.duplicate').on('click', duplicateTodo);
-    $('.todo-label').on('dblclick', updateTodo);
-    $('.toggle').on('change', updateTodo);
-    $('.toggle-all').on('change', toggleAll);
-    $('.clear-completed').on('click', clearCompleted);
+    $('.new-todo').on('keypress', onAddTodo);
+    $('.destroy').on('click', onDeleteTodo);
+    $('.duplicate').on('click', onDuplicateTodo);
+    $('.todo-label').on('dblclick', onUpdateTodo);
+    $('.toggle').on('change', onUpdateTodo);
+    $('.toggle-all').on('change', onToggleAll);
+    $('.clear-completed').on('click', onClearCompleted);
 };
 
 $().ready(() => {

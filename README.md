@@ -36,7 +36,7 @@ Go through the [bug list](#bug-list) below and follow instructions to see some b
     - **Debug:**  
         1. In the Rookout app, open the file `/src/utils/store.js`
         2. Using the **Rules** pane on the right, select the *Rule Type* "Dump Frame"
-        3. Add this rule to line 141 and try again to click on `Clear completed` to see the message that pops in the Rookout app
+        3. Add this rule to line 140 and try again to click on `Clear completed` to see the message that pops in the Rookout app
         4. We can now see the whole stacktrace leading to this point and we pinpoint the error to this message :
         5. We see the `Locals` object and all we have in is `this`, which has `todos` inside it.
             - it means we need to access todos as `this.todos.filter(...` and not `todos.filter(...`
@@ -47,7 +47,7 @@ Go through the [bug list](#bug-list) below and follow instructions to see some b
     - **Debug:**
         1. In the Rookout app, open the file `/src/handlers/todo.js`
         2. Using the **Rules** pane on the right, select the *Rule Type* "Log"
-        3. Add this rule to line 55
+        3. Add this rule to line 56
         4. Before triggering the rule, let's edit it so it returns what we want
         5. In the **Rules** pane on the right, click the *Edit Rule* (pen) icon next to the rule you just added. It will open up the Rule configuration as a JSON file
         6. On line 6 in the `paths` object let's add a property `"store.rookout.locals.todo": "frame.todo"`
@@ -69,14 +69,14 @@ Go through the [bug list](#bug-list) below and follow instructions to see some b
     - **Reproduce:** Add a task with Hebrew or special characters. All these characters should not be saved.
     - **Debug:**
         1. In the Rookout app, open the file `/src/handlers/todo.js`
-        2. At lines 14 and 30 we see that the title passes the function `cleanString(title)` - Let's add a `Dump Frame` as we did before to line 75 at the end of this function.
+        2. At lines 18 and 35 we see that the title passes the function `cleanString(...)` - Let's add a `Dump Frame` as we did before to line 81 at the end of this function.
         3. Try to add a task with some of these characters to get the frame.
         4. We can see that after using line 73 these characters are being found and replaced by regex. We found the source of the issue.
         ```
         regex = ...
         this = ...
-        title = "משימה בעברית < > &&"
-        trimmedTitle = ""
+        str = "משימה בעברית < > &&"
+        trimmedStr = ""
         ```
 
 

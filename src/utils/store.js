@@ -115,15 +115,12 @@ Store.prototype.save = function(updateData, id) {
  * @returns {Promise}
  */
 Store.prototype.remove = function(id) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
-            let todos = this.todos;
-            for (let i = 0; i < todos.length; i++) {
-                if (todos[i].id == id) {
-                    todos.splice(i, 1);
-                    break;
-                }
-            }
+            const todoToRemove = await this.findById(id);
+            const todos = this.todos.filter(todo => {
+                return todo != todoToRemove;
+            });
             this.todos = todos;
             resolve(todos);
         } catch (err) {
@@ -141,10 +138,7 @@ Store.prototype.ClearCompleted = function() {
     return new Promise((resolve, reject) => {
         try {
             const todos = todos.filter(todo => {
-                if (todo.completed) {
-                    return false;
-                }
-                return true;
+                return !todo.completed;
             });
             this.todos = todos;
             resolve(todos);
@@ -162,10 +156,9 @@ Store.prototype.ClearCompleted = function() {
 Store.prototype.ToggleAll = function() {
     return new Promise((resolve, reject) => {
         try {
-            let todos = this.todos;
-            for (let i = 0; i < todos.length; i++) {
-                todos[i].completed = !todos[i].completed;
-            }
+            const todos = this.todos.forEach(todo => {
+                todo.completed = !todo.completed;
+            });
             this.todos = todos;
             resolve(todos);
         } catch (err) {

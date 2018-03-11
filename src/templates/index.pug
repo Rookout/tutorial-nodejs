@@ -1,0 +1,17 @@
+doctype html
+html(lang="en" data-framework="javascript")
+    head
+        meta(charset="utf-8")
+        title Rookout Todo Demo
+        link(rel="stylesheet" href="/static/css/style.css")
+        script(src="/static/js/jquery-3.3.1.min.js")
+        script(src="/static/js/requester.js")
+        script(src="/static/js/app.js")
+    body
+        section(class="todoapp")
+            include header.pug
+            include main.pug
+            include footer.pug
+        footer(class="info")
+            p Double-click to edit a todo
+    

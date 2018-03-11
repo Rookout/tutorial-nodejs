@@ -77,7 +77,7 @@ input[type="checkbox"] {
 	font-size: 100px;
 	font-weight: 100;
 	text-align: center;
-	color: rgba(175, 47, 47, 0.15);
+	color: rgba(153,98,255, 0.9);
 	-webkit-text-rendering: optimizeLegibility;
 	-moz-text-rendering: optimizeLegibility;
 	text-rendering: optimizeLegibility;
@@ -96,8 +96,8 @@ input[type="checkbox"] {
 	outline: none;
 	color: inherit;
 	padding: 6px;
-	border: 1px solid #999;
-	box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+	border: 1px solid rgba(153,98,255, 0.4);
+	box-shadow: inset 0 -1px 5px 0 rgba(153,98,255, 0.3);
 	box-sizing: border-box;
 	-webkit-font-smoothing: antialiased;
 	-moz-font-smoothing: antialiased;
@@ -134,7 +134,7 @@ label[for='toggle-all'] {
 .toggle-all:before {
 	content: '❯';
 	font-size: 22px;
-	color: #e6e6e6;
+	color: #9962FF;
 	padding: 10px 27px 10px 27px;
 }
 
@@ -193,7 +193,7 @@ label[for='toggle-all'] {
 }
 
 .todo-list li .toggle:checked:after {
-	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#9962FF" stroke-width="3"/><path fill="#9962FF" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
 }
 
 .todo-list li label {
@@ -248,13 +248,13 @@ label[for='toggle-all'] {
 	height: 40px;
 	margin: auto 0;
 	font-size: 30px;
-	color: lightblue;
+	color: rgba(153,98,255,0.8);
 	margin-bottom: 11px;
 	transition: color 0.2s ease-out;
 }
 
 .todo-list li .duplicate:hover {
-	color: royalblue;
+	color: #533C92;
 }
 
 .todo-list li .duplicate:after {
@@ -329,11 +329,11 @@ label[for='toggle-all'] {
 
 .filters li a.selected,
 .filters li a:hover {
-	border-color: rgba(175, 47, 47, 0.1);
+	border-color: rgba(153, 98, 255, 0.3);
 }
 
 .filters li a.selected {
-	border-color: rgba(175, 47, 47, 0.2);
+	border-color: rgba(153, 98, 255, 0.5);
 }
 
 .clear-completed,
@@ -348,11 +348,12 @@ html .clear-completed:active {
 
 .clear-completed:hover {
 	text-decoration: underline;
+	text-decoration-color: #9962FF;
 }
 
 .info {
 	margin: 65px auto 0;
-	color: #bfbfbf;
+	color: #9962FF;/*#bfbfbf;*/
 	font-size: 10px;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 	text-align: center;

@@ -1,6 +1,10 @@
-const HomeServiceProvider = require('../services/home');
+const TodosService = require('../services/todos');
 
-module.exports.Home = async (req, res, next) => {
-    const data = await HomeServiceProvider.HomeProvider(req.params.shown);
-    res.render('index', data);
-}
+const HomePage = async (req, res) => {
+  const data = await TodosService.GetTodosData(req.params.shown);
+  res.render('index', data);
+};
+
+module.exports = {
+  HomePage,
+};

@@ -1,6 +1,7 @@
 const TodoHandlers = require('../handlers/todo');
 const express = require('express');
-let router = express.Router();
+
+const router = express.Router();
 
 router.get('/', TodoHandlers.GetAllTodos);
 router.post('/', TodoHandlers.AddTodo);

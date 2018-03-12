@@ -4,6 +4,7 @@
   "description": "API for Rookout's tutorial demo app",
   "main": "index.js",
   "scripts": {
+    "lint": "./node_modules/.bin/eslint index.js src",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,5 +18,9 @@
     "pug": "^2.0.0-rc.4",
     "rookout": "^0.1.11"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0"
+  }
 }

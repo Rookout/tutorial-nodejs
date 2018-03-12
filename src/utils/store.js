@@ -46,7 +46,7 @@ Store.prototype.findById = function (id) {
   return new Promise((resolve, reject) => {
     try {
       this.todos.forEach((todo) => {
-        if (todo.id === id) { resolve(todo); }
+        if (todo.id.toString() === id) { resolve(todo); }
       });
     } catch (err) {
       reject(err);
@@ -82,8 +82,8 @@ Store.prototype.save = function (updateData, id) {
       // If an ID was actually given, find the item and update each property
       if (id) {
         for (let i = 0; i < this.todos.length; i + 1) {
-          if (this.todos[i].id === id) {
-            updateData.forEach((key) => {
+          if (this.todos[i].id.toString() === id) {
+            Object.keys(updateData).forEach((key) => {
               this.todos[i][key] = updateData[key];
             });
             break;

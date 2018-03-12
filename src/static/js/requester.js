@@ -58,7 +58,10 @@ const onUpdateTodo = (e) => {
   if ($(e.target).hasClass('todo-label')) {
     const todoElement = $(e.target.parentElement.parentElement);
     const editingElement = $(e.target.parentElement.nextElementSibling);
-
+    todoElement.addClass('editing');
+    editingElement.focus();
+    const inputLength = editingElement.val().length;
+    editingElement[0].setSelectionRange(inputLength, inputLength); // Focusing on end of input
     $(editingElement).on('keydown', (kbEvent) => {
       if (kbEvent.keyCode === 27) { // Escape Key - Cancel action
         $('.editing').removeClass('editing');
@@ -71,12 +74,6 @@ const onUpdateTodo = (e) => {
         sendUpdateRequest(newData);
       }
     });
-
-
-    todoElement.addClass('editing');
-    editingElement.focus();
-    const inputLength = editingElement.val().length;
-    editingElement[0].setSelectionRange(inputLength, inputLength); // Focusing on end of input
   } else if ($(e.target).hasClass('toggle')) {
     const todoElement = $(e.target.parentElement.parentElement);
     const newData = getTodoData(todoElement);

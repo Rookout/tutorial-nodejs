@@ -1,0 +1,10 @@
+li(data-id=todo.id class=todo.completed ? "completed" : "")
+    div(class="view")
+        if todo.completed
+            input(class="toggle" type="checkbox" checked)
+        else
+            input(class="toggle" type="checkbox")
+        label(class="todo-label") #{todo.title}
+        button(class="duplicate")
+        button(class="destroy")
+    input(type="text" class="edit" value=todo.title)

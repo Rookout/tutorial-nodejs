@@ -1,0 +1,19 @@
+version: '2'
+services:
+  todoapp:
+    container_name: todoapp
+    restart: always
+    build: .
+    environment:
+      - ROOKOUT_AGENT_HOST=rookout-agent
+    ports:
+      - "4000:4000"
+    links:
+      - rookout-agent
+  rookout-agent:
+    container_name: rookout-agent
+    image: rookout/agent
+    environment:
+      - ROOKOUT_TOKEN=YOUR_TOKEN
+    ports:
+      - "7486:7486"

@@ -1,13 +1,13 @@
-'use strict';
+/* eslint func-names: 0 */
 /**
  * Creates a new server side storage object and will create an empty
  * collection if no collection already exists.
  *
  */
 class Store {
-    constructor() {
-        this.todos = [];
-    }
+  constructor() {
+    this.todos = [];
+  }
 }
 
 /**
@@ -18,23 +18,22 @@ class Store {
  * @example
  * store.find({foo: 'bar', hello: 'world'})
  */
-Store.prototype.find = function(query) {
-    return new Promise((resolve, reject) => {
-        try {
-            const todos = this.todos.filter( todo => {
-                for (let q in query) {
-                    if (query[q] !== todo[q]) {
-                        return false;
-                    }
-                }
-                return true;
-            });
-            resolve(todos);
+Store.prototype.find = function (query) {
+  return new Promise((resolve, reject) => {
+    try {
+      const todos = this.todos.filter((todo) => {
+        for (const q in query) { // eslint-disable-line no-restricted-syntax
+          if (query[q] !== todo[q]) {
+            return false;
+          }
         }
-        catch (err) {
-            reject(err);
-        }
-    });
+        return true;
+      });
+      resolve(todos);
+    } catch (err) {
+      reject(err);
+    }
+  });
 };
 
 /**
@@ -43,33 +42,30 @@ Store.prototype.find = function(query) {
  * @param {string} id The id to match
  * @returns {Promise}
  */
-Store.prototype.findById = function(id) {
-    return new Promise((resolve, reject) => {
-        try {
-            this.todos.forEach( todo => {
-                if (todo.id == id)
-                    resolve(todo);
-            });
-        }
-        catch (err) {
-            reject(err);
-        }
-    });
+Store.prototype.findById = function (id) {
+  return new Promise((resolve, reject) => {
+    try {
+      this.todos.forEach((todo) => {
+        if (todo.id.toString() === id) { resolve(todo); }
+      });
+    } catch (err) {
+      reject(err);
+    }
+  });
 };
 
 /**
  * Will retrieve all data from the collection
  * @returns {Promise}
  */
-Store.prototype.findAll = function() {
-    return new Promise((resolve, reject) => {
-        try {
-            resolve(this.todos);
-        }
-        catch (err) {
-            reject(err);
-        }
-    });
+Store.prototype.findAll = function () {
+  return new Promise((resolve, reject) => {
+    try {
+      resolve(this.todos);
+    } catch (err) {
+      reject(err);
+    }
+  });
 };
 
 /**
@@ -80,32 +76,29 @@ Store.prototype.findAll = function() {
  * @param {number} id An optional param to enter an ID of an item to update
  * @returns {Promise}
  */
-Store.prototype.save = function(updateData, id) {
-    return new Promise((resolve, reject) => {
-        try {
-            let todos = this.todos;
-            // If an ID was actually given, find the item and update each property
-            if (id) {
-                for (let i = 0; i < todos.length; i++) {
-                    if (todos[i].id === id) {
-                        for (let key in updateData) {
-                            todos[i][key] = updateData[key];
-                        }
-                        break;
-                    }
-                }
-            } else {
-                // Generate a new id and add to store
-                updateData.id = new Date().getTime();
-                todos.push(updateData);
-            }
-            this.todos = todos;
-            resolve(updateData);
+Store.prototype.save = function (updateData, id) {
+  return new Promise((resolve, reject) => {
+    try {
+      // If an ID was actually given, find the item and update each property
+      if (id) {
+        for (let i = 0; i < this.todos.length; i + 1) {
+          if (this.todos[i].id.toString() === id) {
+            Object.keys(updateData).forEach((key) => {
+              this.todos[i][key] = updateData[key];
+            });
+            break;
+          }
         }
-        catch (err) {
-            reject(err);
-        }
-    });
+      } else {
+        // Generate a new id and add to store
+        updateData.id = new Date().getTime();
+        this.todos.push(updateData);
+      }
+      resolve(updateData);
+    } catch (err) {
+      reject(err);
+    }
+  });
 };
 
 /**
@@ -114,19 +107,17 @@ Store.prototype.save = function(updateData, id) {
  * @param {number} id The ID of the item you want to remove
  * @returns {Promise}
  */
-Store.prototype.remove = function(id) {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const todoToRemove = await this.findById(id);
-            const todos = this.todos.filter(todo => {
-                return todo != todoToRemove;
-            });
-            this.todos = todos;
-            resolve(todos);
-        } catch (err) {
-            reject(err);
-        }
-    });
+Store.prototype.remove = function (id) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const todoToRemove = await this.findById(id);
+      const todos = this.todos.filter(todo => todo !== todoToRemove);
+      this.todos = todos;
+      resolve(todos);
+    } catch (err) {
+      reject(err);
+    }
+  });
 };
 
 /**
@@ -134,18 +125,16 @@ Store.prototype.remove = function(id) {
  *
  * @returns {Promise}
  */
-Store.prototype.ClearCompleted = function() {
-    return new Promise((resolve, reject) => {
-        try {
-            const todos = todos.filter(todo => {
-                return !todo.completed;
-            });
-            this.todos = todos;
-            resolve(todos);
-        } catch (err) {
-            reject(err);
-        }
-    });
+Store.prototype.ClearCompleted = function () {
+  return new Promise((resolve, reject) => {
+    try {
+      const todos = todos.filter(todo => !todo.completed); // eslint-disable-line no-use-before-define
+      this.todos = todos;
+      resolve(todos);
+    } catch (err) {
+      reject(err);
+    }
+  });
 };
 
 /**
@@ -153,18 +142,17 @@ Store.prototype.ClearCompleted = function() {
  *
  * @returns {Promise}
  */
-Store.prototype.ToggleAll = function() {
-    return new Promise((resolve, reject) => {
-        try {
-            const todos = this.todos.forEach(todo => {
-                todo.completed = !todo.completed;
-            });
-            this.todos = todos;
-            resolve(todos);
-        } catch (err) {
-            reject(err);
-        }
-    });
+Store.prototype.ToggleAll = function () {
+  return new Promise((resolve, reject) => {
+    try {
+      this.todos.forEach((todo) => {
+        todo.completed = !todo.completed;
+      });
+      resolve(this.todos);
+    } catch (err) {
+      reject(err);
+    }
+  });
 };
 
 /**
@@ -172,15 +160,15 @@ Store.prototype.ToggleAll = function() {
  *
  * @returns {Promise}
  */
-Store.prototype.drop = function() {
-    return new Promise((resolve, reject) => {
-        try {
-            this.todos = [];
-            resolve(true);
-        } catch (err) {
-            reject(err);
-        }
-    });
+Store.prototype.drop = function () {
+  return new Promise((resolve, reject) => {
+    try {
+      this.todos = [];
+      resolve(true);
+    } catch (err) {
+      reject(err);
+    }
+  });
 };
 
 module.exports = Store;

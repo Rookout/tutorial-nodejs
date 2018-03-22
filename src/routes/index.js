@@ -1,10 +1,11 @@
 const IndexHandlers = require('../handlers/index');
 const express = require('express');
-let router = express.Router();
+
+const router = express.Router();
 
 
 /* GET home page. */
-router.get('/', IndexHandlers.Home);
-router.get('/filter/:shown', IndexHandlers.Home);
+router.get('/', IndexHandlers.HomePage);
+router.get('/filter/:shown', IndexHandlers.HomePage);
 
 module.exports = router;

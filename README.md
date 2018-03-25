@@ -33,7 +33,7 @@
 
 __The integration is working and we can know debug some things together to learn how to use Rookout__
 
-Go through the [bug list](https://github.com/Rookout/tryme-tutorial/BUGHUNT.md) and follow instructions to see some basic use cases.
+Go through the [bug list](https://github.com/Rookout/tryme-tutorial/blob/master/BUGHUNT.md) and follow instructions to see some basic use cases.
 
 ## Rules Common Issues
 

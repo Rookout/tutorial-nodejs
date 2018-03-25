@@ -1,7 +1,14 @@
+// this file should be named actions
+// as we talked the handler should be as thin as possible
+// let's create services/todos and move all the logic there
+
+
 const sendResponse = (res, statusCode, message) => {
   res.status(statusCode).send({ message });
 };
 
+//is it really needed?
+// if so, move to a services/utils, use in  services/todos
 const cleanString = (str) => {
   const regex = new RegExp(/[\u0590-\u05FF|>|<|;|`|&|/|\\]/g);
   let trimmedStr = str.replace(regex, '');
@@ -9,6 +16,7 @@ const cleanString = (str) => {
   return trimmedStr;
 };
 
+//remove
 const GetAllTodos = async (req, res) => {
   const todos = await global.Store.findAll();
   if (!todos) {
@@ -17,16 +25,21 @@ const GetAllTodos = async (req, res) => {
   return sendResponse(res, 200, todos);
 };
 
+// after moving logic to todos
+
+const performAction = action => async (request, response) =>  {
+	const result = await action(request);
+	//NOTICE THE BLANK LINE
+	if (result.ok) {
+		return sendResponse(response, 200);  // do you think we need to add the response?
+	}
+	//NOTICE THE BLANK LINE
+	return sendResponse(response, 400, result.errorMessage)
+}
+
 const AddTodo = async (req, res) => {
-  if (!req.body.title) {
-    return sendResponse(res, 400, 'Missing required payload parameter <Title>');
-  }
-  const todo = {
-    title: cleanString(req.body.title),
-    completed: false,
-  };
-  const response = await global.Store.save(todo);
-  return sendResponse(res, 200, response);
+    const addAction = (req) => todos.add({title: req.body.title, });
+	return performAction(addAction)(req, res);
 };
 
 const UpdateTodo = async (req, res) => {
@@ -34,7 +47,7 @@ const UpdateTodo = async (req, res) => {
     return sendResponse(res, 400, 'Missing required parameters/payload <id>, <title>, <completed>');
   }
   const todoId = req.params.id;
-  const query = await global.Store.findById(todoId);
+  const query = await global.Store.findById(todoId); //why do we need query?
   const todo = query;
   if (!todo) {
     return sendResponse(res, 404, 'No todo found');
@@ -63,6 +76,10 @@ const DuplicateTodo = async (req, res) => {
   if (!todo) {
     return sendResponse(res, 404, 'No todo found');
   }
+
+	// this is a duplication, and below you see the problem. (see the bug?)
+	// in services/todos add function aNewTodo(title, completed)
+
   const newTodo = {
     title: todo.completed,
     completed: todo.title,
@@ -81,6 +98,7 @@ const ClearCompleted = async (req, res) => {
   return sendResponse(res, 200, 'Cleared all complete todos');
 };
 
+//no CamelCase
 module.exports = {
   GetAllTodos,
   AddTodo,

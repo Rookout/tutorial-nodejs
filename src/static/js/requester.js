@@ -1,4 +1,12 @@
 /* eslint no-undef: 0, no-unused-vars: 0, no-restricted-globals: 0 */
+
+// use this one to remove code duplication below
+const reloadOnDone = action =>
+	action.done(() => {
+		location.reload();
+	});
+
+
 const onAddTodo = (e) => {
   if (e.keyCode === 13) { // Enter Key
     const input = $('.new-todo');

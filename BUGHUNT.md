@@ -16,7 +16,7 @@
     - **Debug:**
         1. In the Rookout app, open the file `/src/services/todos.js`
         2. Using the **Rules** pane on the right, select the *Rule Type* "Log"
-        3. Add this rule to line 93
+        3. Add this rule to line 92
         4. Before triggering the rule, let's edit it so it returns what we want
         5. In the **Rules** pane on the right, click the *Edit Rule* (pen) icon next to the rule you just added. It will open up the Rule configuration as a JSON file
         6. On line 6 in the `paths` object let's add a property `"store.rookout.locals.todo": "frame.todo"`
@@ -38,7 +38,7 @@
     - **Reproduce:** Add a task with special characters. All these characters should not be saved.
     - **Debug:**
         1. In the Rookout app, open the file `/src/services/todos.js`
-        2. At lines 15 and 62 we see that the title passes the function `utils.cleanString(...)` - Let's add a `Dump Frame` to the end of the function in file `/src/services/utils.js`.
+        2. At lines 14 and 61 we see that the title passes the function `utils.cleanString(...)` - Let's add a `Dump Frame` to the end of the function in file `/src/services/utils.js`.
         3. Try to add a task with some of these characters to get the frame.
         4. We can see that after using this function, on line 3 these characters are being found and replaced by regex. We found the source of the issue.
         ```

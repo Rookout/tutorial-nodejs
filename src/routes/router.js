@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', HomePageHandlers.homePage);
 router.get('/filter/:shown', HomePageHandlers.homePage);
 
-//restful endpoints:
+// restful endpoints:
 router.get('/todos', ActionsHandlers.getAllTodos);
 router.post('/todos', ActionsHandlers.addTodo);
 router.put('/todos/:id', ActionsHandlers.updateTodo);

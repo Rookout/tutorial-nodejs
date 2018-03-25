@@ -1,9 +1,9 @@
 /* eslint no-undef: 0, no-unused-vars: 0, no-restricted-globals: 0 */
 
 const reloadOnDone = action =>
-	action.done(() => {
-		location.reload();
-	});
+  action.done(() => {
+    location.reload();
+  });
 
 
 const onAddTodo = (e) => {
@@ -27,8 +27,8 @@ const onDeleteTodo = (e) => {
 
   const action = $.ajax(`/todos/${todoId}`, {
     method: 'DELETE',
-  })
-  
+  });
+
   reloadOnDone(action);
 };
 
@@ -37,7 +37,7 @@ const onDuplicateTodo = (e) => {
 
   const action = $.ajax(`/todos/${todoId}/duplicate`, {
     method: 'POST',
-  })
+  });
 
   reloadOnDone(action);
 };
@@ -55,8 +55,8 @@ const sendUpdateRequest = (newData) => {
     method: 'PUT',
     data: JSON.stringify({ title: newData.title, completed: newData.completed }),
     dataType: 'json',
-  })
-  
+  });
+
   reloadOnDone(action);
 };
 
@@ -68,7 +68,7 @@ const onUpdateTodo = (e) => {
     editingElement.focus();
     const inputLength = editingElement.val().length;
     editingElement[0].setSelectionRange(inputLength, inputLength); // Focusing on end of input
-    
+
     $(editingElement).on('keydown', (kbEvent) => {
       if (kbEvent.keyCode === 27) { // Escape Key - Cancel action
         $('.editing').removeClass('editing');
@@ -94,15 +94,15 @@ const onUpdateTodo = (e) => {
 const onToggleAll = () => {
   const action = $.ajax('/todos/toggleall', {
     method: 'POST',
-  })
-  
+  });
+
   reloadOnDone(action);
 };
 
 const onClearCompleted = () => {
   const action = $.ajax('/todos', {
     method: 'DELETE',
-  })
-  
+  });
+
   reloadOnDone(action);
 };

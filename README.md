@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/Rookout/tryme-tutorial/tree/master.svg?style=svg)](https://circleci.com/gh/Rookout/tryme-tutorial/tree/master)
+
 # How to use ?
 
 ## Running Locally

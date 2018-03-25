@@ -23,9 +23,9 @@
 1. After running the server go to [https://app.rookout.com/](https://app.rookout.com/)
     - If you are not logged in yet, log in
 1. Add the source code according to the instructions using the left pane **Source View**
-1. Open the file `/src/handlers/index.js`
+1. Open the file `/src/handlers/homePage.js`
 1. In the right-hand pane **Rules** choose the Rule Type `Log - Rookout`
-1. Add a rule to line 2 by clicking next the the line number in the file viewer
+1. Add a rule to line 5 by clicking next the the line number in the file viewer
 1. Looking at the right-hand pane **Rules**, you should see the rule you added, on what line you added it and it should be GREEN, meaning everything is communicating correctly.
     - If this is not the case, [click here](#rules-common-issues) to see how to fix that
 1. Refresh, or go the the app page [http://localhost:4000/](http://localhost:4000/) in order to trigger the rule

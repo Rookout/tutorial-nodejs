@@ -3,7 +3,7 @@ const getTodos = async ({ fetchFunc, labelText, filter }) => {
 
   return {
     shownTodos: todos,
-    countLabel: `${todos.length} ${labelText}`,
+    countText: `${todos.length} ${labelText}`,
     filter,
   };
 };
@@ -38,16 +38,16 @@ const getActive = async () => {
   });
 };
 
-const todoByFilter = {
+const fetchTodosByFilter = {
   completed: getCompleted,
   active: getActive,
   all: getAll,
 };
 
 const getTodosByFilter = async (filter) => {
-  const todosByFilter = todoByFilter[filter] || todoByFilter.all;
+  const fetchTodos = fetchTodosByFilter[filter] || fetchTodosByFilter.all;
 
-  return todosByFilter();
+  return fetchTodos();
 };
 
 

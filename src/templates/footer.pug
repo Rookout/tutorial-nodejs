@@ -1,18 +1,18 @@
 footer(class="footer")
-    span(class="todo-count") #{countLabel}
+    span(class="todo-count") #{countText}
     ul(class="filters")
         li
-            if shownFilter == 'all'
+            if filter == 'all'
                 a(href="/" class="selected") All
             else
                 a(href="/") All
         li
-            if shownFilter == 'active'
+            if filter == 'active'
                 a(href="/filter/active" class="selected") Active
             else
                 a(href="/filter/active") Active
         li
-            if shownFilter == 'completed'
+            if filter == 'completed'
                 a(href="/filter/completed" class="selected") Completed
             else
                 a(href="/filter/completed") Completed

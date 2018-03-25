@@ -7,8 +7,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const path = require('path');
-const IndexRouter = require('./routes/index');
-const TodosRouter = require('./routes/todo');
+const Router = require('./routes/router');
 const Store = require('./utils/store');
 
 // Initializing global Store as an in-memory database
@@ -29,9 +28,7 @@ app.use(bodyParser.json());
 
 // Initialize Routes
 app.use('/static', express.static(path.join(__dirname, 'static')));
-app.use('/', IndexRouter);
-app.use('/todos', TodosRouter);
-
+app.use('/', Router);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

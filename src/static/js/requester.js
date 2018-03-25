@@ -1,46 +1,45 @@
 /* eslint no-undef: 0, no-unused-vars: 0, no-restricted-globals: 0 */
 
-// use this one to remove code duplication below
 const reloadOnDone = action =>
-	action.done(() => {
-		location.reload();
-	});
+  action.done(() => {
+    location.reload();
+  });
 
 
 const onAddTodo = (e) => {
   if (e.keyCode === 13) { // Enter Key
     const input = $('.new-todo');
     const title = input.val();
-    $.ajax('/todos', {
+
+    const action = $.ajax('/todos', {
       contentType: 'application/json',
       method: 'POST',
       data: JSON.stringify({ title }),
       dataType: 'json',
-    })
-      .done(() => {
-        location.reload();
-      });
+    });
+
+    reloadOnDone(action);
   }
 };
 
 const onDeleteTodo = (e) => {
   const todoId = $(e.target.parentElement.parentElement).data('id');
-  $.ajax(`/todos/${todoId}`, {
+
+  const action = $.ajax(`/todos/${todoId}`, {
     method: 'DELETE',
-  })
-    .done(() => {
-      location.reload();
-    });
+  });
+
+  reloadOnDone(action);
 };
 
 const onDuplicateTodo = (e) => {
   const todoId = $(e.target.parentElement.parentElement).data('id');
-  $.ajax(`/todos/duplicate/${todoId}`, {
+
+  const action = $.ajax(`/todos/${todoId}/duplicate`, {
     method: 'POST',
-  })
-    .done(() => {
-      location.reload();
-    });
+  });
+
+  reloadOnDone(action);
 };
 
 const getTodoData = (todoElement) => {
@@ -51,15 +50,14 @@ const getTodoData = (todoElement) => {
 };
 
 const sendUpdateRequest = (newData) => {
-  $.ajax(`/todos/${newData.id}`, {
+  const action = $.ajax(`/todos/${newData.id}`, {
     contentType: 'application/json',
     method: 'PUT',
     data: JSON.stringify({ title: newData.title, completed: newData.completed }),
     dataType: 'json',
-  })
-    .done(() => {
-      location.reload();
-    });
+  });
+
+  reloadOnDone(action);
 };
 
 const onUpdateTodo = (e) => {
@@ -70,39 +68,41 @@ const onUpdateTodo = (e) => {
     editingElement.focus();
     const inputLength = editingElement.val().length;
     editingElement[0].setSelectionRange(inputLength, inputLength); // Focusing on end of input
+
     $(editingElement).on('keydown', (kbEvent) => {
       if (kbEvent.keyCode === 27) { // Escape Key - Cancel action
         $('.editing').removeClass('editing');
       }
     });
+
     $(editingElement).on('keypress', (kbEvent) => {
       if (kbEvent.keyCode === 13) { // Enter Key - Confirm action
         const contextTodoElement = $(kbEvent.target.parentElement);
         const newData = getTodoData(contextTodoElement);
+
         sendUpdateRequest(newData);
       }
     });
   } else if ($(e.target).hasClass('toggle')) {
     const todoElement = $(e.target.parentElement.parentElement);
     const newData = getTodoData(todoElement);
+
     sendUpdateRequest(newData);
   }
 };
 
 const onToggleAll = () => {
-  $.ajax('/todos/toggleall', {
+  const action = $.ajax('/todos/toggleall', {
     method: 'POST',
-  })
-    .done(() => {
-      location.reload();
-    });
+  });
+
+  reloadOnDone(action);
 };
 
 const onClearCompleted = () => {
-  $.ajax('/todos/clear', {
-    method: 'POST',
-  })
-    .done(() => {
-      location.reload();
-    });
+  const action = $.ajax('/todos', {
+    method: 'DELETE',
+  });
+
+  reloadOnDone(action);
 };

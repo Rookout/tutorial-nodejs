@@ -1,4 +1,4 @@
-version: 2
+version: 3
 references:
   restore_cache:
           keys:
@@ -34,6 +34,7 @@ jobs:
     docker:
       - image: circleci/node:8.9.4
     steps:
+      - setup_remote_docker
       - checkout
       - run:
           name: Create Docker Image

@@ -1,4 +1,17 @@
 version: 2
+references:
+  restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+  
+  save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+
 jobs:
   build:
     working_directory: ~/tryme-tutorial
@@ -7,23 +20,47 @@ jobs:
     steps:
       - checkout
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+      - restore_cache: &restore_cache
       - run: 
           name: Install Dependencies
           command: 'npm install'
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      - save_cache: &save_cache
       - run:
           name: Run ESLint
           command: 'npm run lint'
+
+  deploy_docker_image:
+    working_directory: ~/tryme-tutorial
+    docker:
+      - image: circleci/node:8.9.4
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run:
+          name: Create Docker Image
+          command: |
+            docker info
+            docker build --rm=false -t rookout/tryme-tutorial
+      - run:
+          name: Test Docker Image
+          command: |
+            docker run -d -p 4000:4000 rookout/tryme-tutorial
+            sleep 5
+            curl --retry 10 --retry-delay 5 -v http://localhost:4000
+      - run:
+          name: Deploy Image to Docker Hub
+          environment:
+            - TAG: "0.1.$CIRCLE_BUILD_NUM"
+          command: |
+              docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+              docker push rookout/tryme-tutorial:$TAG
+
+
 workflows:
   version: 2
-  build_and_test:
+  build_test_and_deploy:
     jobs:
       - build
+      - deploy_docker_image:
+          requires:
+            - build

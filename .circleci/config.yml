@@ -42,7 +42,7 @@ jobs:
           name: Create Docker Image
           command: |
             docker info
-            docker build --rm=false -t rookout/tryme-tutorial
+            docker build --rm=false -t rookout/tryme-tutorial .
       - run:
           name: Test Docker Image
           command: |

@@ -1,4 +1,4 @@
-[![CircleCI branch](https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser/master.svg)](https://circleci.com/gh/Rookout/tryme-tutorial)
+[![CircleCI](https://circleci.com/gh/Rookout/tryme-tutorial/tree/master.svg?style=svg)](https://circleci.com/gh/Rookout/tryme-tutorial/tree/master)
 [![GitHub version](https://badge.fury.io/gh/rookout%2Ftryme-tutorial.svg)](https://badge.fury.io/gh/rookout%2Ftryme-tutorial)
 [![npm version](https://badge.fury.io/js/rookout.svg)](https://badge.fury.io/js/rookout)
 

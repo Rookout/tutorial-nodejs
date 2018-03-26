@@ -1,8 +1,6 @@
 [![CircleCI branch](https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser/master.svg)](https://circleci.com/gh/Rookout/tryme-tutorial)
 [![GitHub version](https://badge.fury.io/gh/rookout%2Ftryme-tutorial.svg)](https://badge.fury.io/gh/rookout%2Ftryme-tutorial)
 [![npm version](https://badge.fury.io/js/rookout.svg)](https://badge.fury.io/js/rookout)
-[![PyPI version](https://badge.fury.io/py/rook.svg)](https://badge.fury.io/py/rook)
-[![Maven Central](https://img.shields.io/maven-central/v/org.apache.maven/apache-maven.svg)](https://mvnrepository.com/artifact/com.rookout/rook)
 
 # How to use ?
 

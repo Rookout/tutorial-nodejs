@@ -44,12 +44,6 @@ jobs:
             docker info
             docker build --rm=false -t rookout/tryme-tutorial .
       - run:
-          name: Test Docker Image
-          command: |
-            docker run -d -p 4000:4000 rookout/tryme-tutorial
-            sleep 5
-            curl --retry 10 --retry-delay 5 -v http://localhost:4000
-      - run:
           name: Deploy Image to Docker Hub
           environment:
             - TAG: "0.1.$CIRCLE_BUILD_NUM"

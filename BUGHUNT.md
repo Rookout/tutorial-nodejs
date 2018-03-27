@@ -7,7 +7,7 @@ The first two will make sure you understand how to create and analyze our most c
 The third bug will introduce a new rule type - Log. You will be walked through the process of editing the rule in order
 to add custom elements to it.
 
-For more information about Rule Scripting refer to (our documentation)[https://rookout.github.io/scripts/index.md]
+For more information about Rule Scripting refer to [our documentation](https://rookout.github.io/scripts/index.md)
 
 __Level: Beginner__
 - __The bug: Clear Completed button hangs, does not do what is intended - nothing is cleared.__

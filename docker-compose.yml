@@ -1,7 +1,7 @@
 version: '2'
 services:
   todoapp:
-    container_name: todoapp
+    container_name: rookout-tutorial-node
     restart: always
     build: .
     environment:
@@ -14,6 +14,6 @@ services:
     container_name: rookout-agent
     image: rookout/agent
     environment:
-      - ROOKOUT_TOKEN=YOUR_TOKEN
+      - ROOKOUT_TOKEN
     ports:
       - "7486:7486"

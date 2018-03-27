@@ -5,7 +5,7 @@ start-web:
 
 install-rookout-agent:
 	wget "https://get.rookout.com" -O setup.sh
-	sh ./setup.sh agent --token=<YOUR_TOKEN>
+	sh ./setup.sh agent --token=$(ROOKOUT_TOKEN)
 	/etc/init.d/rookout-agent start
 
 install-dependencies:

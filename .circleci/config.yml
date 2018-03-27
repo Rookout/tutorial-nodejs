@@ -24,7 +24,7 @@ jobs:
           name: Create Docker Image
           command: |
             docker info
-            docker build --rm=false -t rookout/tutorial-node .
+            docker build -t rookout/tutorial-node .
       - run:
           name: Run Detached Docker Image
           command: |
@@ -38,7 +38,7 @@ jobs:
       - run:
           name: Test Docker Image Accessibility
           command: |
-            curl --retry 10 --retry-delay 5 -v http://localhost:4000
+            docker exec tutorial-node curl --retry 10 --retry-delay 5 --retry-connrefused -v http://localhost:4000
       - run:
           name: Deploy Image to Docker Hub
           environment:

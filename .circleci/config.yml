@@ -27,8 +27,9 @@ jobs:
             docker build --rm=false -t rookout/tutorial-node .
       - run:
           name: Run Detached Docker Image
-          command:
-            - docker run -d -p 4000:4000 --name tutorial-node rookout/tutorial-node && sleep 5
+          command: |
+            docker run -d -p 4000:4000 --name tutorial-node rookout/tutorial-node
+            sleep 5
       - run:
           name: Test Linting
           command: |

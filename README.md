@@ -8,12 +8,12 @@
 
 ### With Docker
 
-1. Insert your agent token in the docker-compose.yml
+1. Set your organization token in an environment variable named ROOKOUT_TOKEN
 1. Run `docker-compose up`
 
 ### Without Docker
 
-1. Insert your agent token in the Makefile
+1. Set your organization token in an environment variable named ROOKOUT_TOKEN
 1. Run `make -j run-prod`
 
 ## Tutorial
@@ -31,7 +31,7 @@
 
 __The integration is working and we can know debug some things together to learn how to use Rookout__
 
-Go through the [bug list](https://github.com/Rookout/tryme-tutorial/blob/master/BUGHUNT.md) and follow instructions to see some basic use cases.
+Go through the [bug list](https://github.com/Rookout/tutorial-node/blob/master/BUGHUNT.md) and follow instructions to see some basic use cases.
 
 ## Rules Common Issues
 

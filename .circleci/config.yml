@@ -1,29 +1,55 @@
 version: 2
+references:
+  restore_cache: &restore_cache
+    keys:
+      - v1-dependencies-{{ checksum "package.json" }}
+      # fallback to using the latest cache if no exact match is found
+      - v1-dependencies-
+  
+  save_cache: &save_cache
+    paths:
+      - node_modules
+    key: v1-dependencies-{{ checksum "package.json" }}
+
+
 jobs:
-  build:
-    working_directory: ~/tryme-tutorial
+  deploy_docker_image:
+    working_directory: ~/tutorial-node
     docker:
       - image: circleci/node:8.9.4
     steps:
+      - setup_remote_docker
       - checkout
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-      - run: 
-          name: Install Dependencies
-          command: 'npm install'
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Run ESLint
-          command: 'npm run lint'
+          name: Create Docker Image
+          command: |
+            docker info
+            docker build -t rookout/tutorial-node .
+      - run:
+          name: Run Detached Docker Image
+          command: |
+            docker run -d -p 4000:4000 --name tutorial-node rookout/tutorial-node
+            sleep 5
+      - run:
+          name: Test Linting
+          command: |
+            docker exec tutorial-node npm i -g eslint eslint-config-airbnb-base eslint-plugin-import
+            docker exec tutorial-node npm run lint
+      - run:
+          name: Test Docker Image Accessibility
+          command: |
+            docker exec tutorial-node curl --retry 10 --retry-delay 5 --retry-connrefused -v http://localhost:4000
+      - run:
+          name: Deploy Image to Docker Hub
+          environment:
+            - TAG: "0.1.$CIRCLE_BUILD_NUM"
+          command: |
+              docker login -u $DOCKER_USER -p $DOCKER_PASS
+              docker push rookout/tutorial-node:$TAG
+
+
 workflows:
   version: 2
-  build_and_test:
+  build_test_and_deploy:
     jobs:
-      - build
+      - deploy_docker_image

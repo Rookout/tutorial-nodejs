@@ -46,13 +46,11 @@
     
 5. Open the file `src/handlers/homePage.js`
 6. Add a default (Dumpframe) rule to line 5 by clicking next the the line number in the file viewer
-7. Looking at the right-hand pane **Rules**, you should see the rule you added, on what line you added it and it should be GREEN, meaning everything is communicating correctly.
+7. Looking at the right-hand pane **Rules**, you will see the rule you added, on what line you added it and it should be GREEN, meaning everything is communicating correctly.
     - If this is not the case, [click here](#rules-common-issues) to see how to fix that
 8. Refresh, or go the the app page [http://localhost:4000/](http://localhost:4000/) in order to trigger the rule
-9. Check the bottom pane **Messages** and you should now see the dumpframe you just added, and it was triggered by the handler of the web page when you accessed it
+9. Check the bottom pane **Messages** and you'll see the dumpframe you just added, as it was triggered by the handler of the web page when you accessed it
 
-
-__The integration is working and we can know debug some things together to learn how to use Rookout__
 
 Go through the [bug list](https://github.com/Rookout/tryme-tutorial/blob/master/BUGHUNT.md) and follow instructions to see some basic use cases.
 

@@ -4,28 +4,69 @@
 
 # How to use ?
 
-## Running Locally
-1. Set your agent token in an env variable 
- ```bash
- export ROOKOUT_TOKEN=<Your-Token>
- ```
-1. Start agent and app
-    - With Docker `docker-compose up`
+1. First, you will need to clone or download this repository.
+2. Running Locally
 
-    - Without Docker `make -j run-prod`
+   1. Set your agent token in an env variable 
+     ```bash
+     export ROOKOUT_TOKEN=<Your-Token>
+     ```
+   2. Start agent and app
+        - With Docker `docker-compose up`
+   
+        - Without Docker `make -j run-prod`
 
-## Tutorial
+3. After running the server go to [https://app.rookout.com/](https://app.rookout.com/) and **Log In**
+4. Add the source code according to the instructions using the left pane **Source View**
+    <details>
+    <summary>More details</summary>
+    <p>
+    
+    #### Adding source code
+    
+    1. Click on Add source
+    1. Choose source control
+        - Github
+            - Click on Connect
+            - Authorize O-Auth
+            - Fill `Repository Owner`
+            - Click `Repository` and choose from the dropdown menu
+            - Click Next
+            - Choose the desired branch
+            - Click View Repository
+        - Local FileSystem - Server
+            - Click on Setup Server
+            - Choose a supported HTTP Server (Node.js)
+            - Leave the default port `8000` or choose your own
+            - Run your local server e.g. `simple-https -p 8000` in the right directory
+            - Click on Connect to Server
+    </p>
+    </details>
+    
+    
+5. Open the file `src/handlers/homePage.js`
+<details>
+    <summary>View file tree</summary>
+    <p>
+    ```
+    src/
+    ├── handlers
+    │   └── homePage.js
+    ├── routes
+    ├── services
+    ├── static
+    ├── templates
+    └── utils
+    ```
+    </p>
+</details>
 
-1. After running the server go to [https://app.rookout.com/](https://app.rookout.com/)
-    - If you are not logged in yet, log in
-1. Add the source code according to the instructions using the left pane **Source View**
-1. Open the file `/src/handlers/homePage.js`
-1. In the right-hand pane **Rules** choose the Rule Type `Log - Rookout`
-1. Add a rule to line 5 by clicking next the the line number in the file viewer
-1. Looking at the right-hand pane **Rules**, you should see the rule you added, on what line you added it and it should be GREEN, meaning everything is communicating correctly.
+6. Add a default (Dumpframe) rule to line 5 by clicking next the the line number in the file viewer
+7. Looking at the right-hand pane **Rules**, you should see the rule you added, on what line you added it and it should be GREEN, meaning everything is communicating correctly.
     - If this is not the case, [click here](#rules-common-issues) to see how to fix that
-1. Refresh, or go the the app page [http://localhost:4000/](http://localhost:4000/) in order to trigger the rule
-1. Check the bottom pane **Messages** and you should now see the log message you just added, and it was triggered by the handler of the web page when you accessed it
+8. Refresh, or go the the app page [http://localhost:4000/](http://localhost:4000/) in order to trigger the rule
+9. Check the bottom pane **Messages** and you should now see the dumpframe you just added, and it was triggered by the handler of the web page when you accessed it
+
 
 __The integration is working and we can know debug some things together to learn how to use Rookout__
 

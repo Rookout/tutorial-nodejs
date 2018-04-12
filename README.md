@@ -5,16 +5,14 @@
 # How to use ?
 
 ## Running Locally
+1. Set your agent token in an env variable 
+ ```bash
+ export ROOKOUT_TOKEN=<Your-Token>
+ ```
+1. Start agent and app
+    - With Docker `docker-compose up`
 
-### With Docker
-
-1. Set your agent token env variable `ROOKOUT_TOKEN`
-1. Run `docker-compose up`
-
-### Without Docker
-
-1. Set your agent token env variable `ROOKOUT_TOKEN`
-1. Run `make -j run-prod`
+    - Without Docker `make -j run-prod`
 
 ## Tutorial
 

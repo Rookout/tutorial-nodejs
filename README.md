@@ -45,22 +45,6 @@
     
     
 5. Open the file `src/handlers/homePage.js`
-<details>
-    <summary>View file tree</summary>
-    <p>
-    ```
-    src/
-    ├── handlers
-    │   └── homePage.js
-    ├── routes
-    ├── services
-    ├── static
-    ├── templates
-    └── utils
-    ```
-    </p>
-</details>
-
 6. Add a default (Dumpframe) rule to line 5 by clicking next the the line number in the file viewer
 7. Looking at the right-hand pane **Rules**, you should see the rule you added, on what line you added it and it should be GREEN, meaning everything is communicating correctly.
     - If this is not the case, [click here](#rules-common-issues) to see how to fix that

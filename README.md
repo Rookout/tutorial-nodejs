@@ -8,12 +8,12 @@
 
 ### With Docker
 
-1. Insert your agent token in the docker-compose.yml
+1. Set your agent token env variable `ROOKOUT_TOKEN`
 1. Run `docker-compose up`
 
 ### Without Docker
 
-1. Insert your agent token in the Makefile
+1. Set your agent token env variable `ROOKOUT_TOKEN`
 1. Run `make -j run-prod`
 
 ## Tutorial

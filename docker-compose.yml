@@ -14,6 +14,6 @@ services:
     container_name: rookout-agent
     image: rookout/agent
     environment:
-      - ROOKOUT_TOKEN=YOUR_TOKEN
+      - ROOKOUT_TOKEN=$ROOKOUT_TOKEN
     ports:
       - "7486:7486"

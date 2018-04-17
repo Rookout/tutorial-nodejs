@@ -81,7 +81,7 @@ Store.prototype.save = function (updateData, id) {
     try {
       // If an ID was actually given, find the item and update each property
       if (id) {
-        for (let i = 0; i < this.todos.length; i = i + 1) {
+        for (let i = 0; i < this.todos.length; i += 1) {
           if (this.todos[i].id.toString() === id) {
             Object.keys(updateData).forEach((key) => {
               this.todos[i][key] = updateData[key];

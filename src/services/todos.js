@@ -1,4 +1,4 @@
-/* eslint prefer-destructuring: 0 */
+/* eslint prefer-destructuring: 0 no-console: 0 */
 const utils = require('./utils');
 
 const actionResult = (ok, message, errorCode = null, errorMessage = null) => ({
@@ -110,7 +110,7 @@ const duplicate = async (req) => {
   const newTodo = addNewTodo(todo.completed, todo.title)
     .then(null, (err) => {
       console.log(err);
-  });
+    });
 
   return actionResult(true, newTodo);
 };

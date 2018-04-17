@@ -16,13 +16,19 @@ const addNewTodo = async (title, completed) => {
   const newTodo = await global.Store.save({
     title,
     completed,
-  });
+  })
+    .then(null, (err) => {
+      console.log(err);
+    });
 
   return newTodo;
 };
 
 const getAll = async () => {
-  const todos = await global.Store.findAll();
+  const todos = await global.Store.findAll()
+    .then(null, (err) => {
+      console.log(err);
+    });
 
   if (!todos) {
     return actionResult(false, null, 404, 'No todos found');
@@ -39,7 +45,10 @@ const add = async (req) => {
     return actionResult(false, null, 400, 'Missing <title>');
   }
 
-  const newTodo = addNewTodo(title, completed);
+  const newTodo = addNewTodo(title, completed)
+    .then(null, (err) => {
+      console.log(err);
+    });
 
   return actionResult(true, newTodo);
 };
@@ -53,7 +62,10 @@ const update = async (req) => {
     return actionResult(false, null, 404, 'Missing required parameters/payload <id>, <title>, <completed>');
   }
 
-  const todo = await global.Store.findById(todoId);
+  const todo = await global.Store.findById(todoId)
+    .then(null, (err) => {
+      console.log(err);
+    });
   if (!todo) {
     return actionResult(false, null, 404, 'No todo found');
   }
@@ -61,7 +73,10 @@ const update = async (req) => {
   todo.title = utils.cleanString(title);
   todo.completed = completed;
 
-  const updatedTodo = await global.Store.save(todo, todoId);
+  const updatedTodo = await global.Store.save(todo, todoId)
+    .then(null, (err) => {
+      console.log(err);
+    });
   return actionResult(true, updatedTodo);
 };
 
@@ -72,7 +87,10 @@ const remove = async (req) => {
     return actionResult(false, null, 400, 'Missing required parameter Todo ID');
   }
 
-  await global.Store.remove(todoId);
+  await global.Store.remove(todoId)
+    .then(null, (err) => {
+      console.log(err);
+    });
   return actionResult(true, 'Deleted successfully');
 };
 
@@ -89,18 +107,27 @@ const duplicate = async (req) => {
     return actionResult(false, null, 404, 'No todo found');
   }
 
-  const newTodo = addNewTodo(todo.completed, todo.title);
+  const newTodo = addNewTodo(todo.completed, todo.title)
+    .then(null, (err) => {
+      console.log(err);
+  });
 
   return actionResult(true, newTodo);
 };
 
 const toggleAll = async (req) => {
-  await global.Store.ToggleAll();
+  await global.Store.ToggleAll()
+    .then(null, (err) => {
+      console.log(err);
+    });
   return actionResult(true, 'Toggled all todos');
 };
 
 const clearCompleted = async (req) => {
-  await global.Store.ClearCompleted();
+  await global.Store.ClearCompleted()
+    .then(null, (err) => {
+      console.log(err);
+    });
   return actionResult(true, 'Cleared all complete todos');
 };
 

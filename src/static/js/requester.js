@@ -3,7 +3,8 @@
 const reloadOnDone = action =>
   action.done(() => {
     location.reload();
-  });
+  })
+    .catch(console.log);
 
 
 const onAddTodo = (e) => {
@@ -23,7 +24,8 @@ const onAddTodo = (e) => {
 };
 
 const onDeleteTodo = (e) => {
-  const todoId = $(e.target.parentElement.parentElement).data('id');
+  const todoId = $(e.target.parentElement.parentElement)
+    .data('id');
 
   const action = $.ajax(`/todos/${todoId}`, {
     method: 'DELETE',
@@ -33,7 +35,8 @@ const onDeleteTodo = (e) => {
 };
 
 const onDuplicateTodo = (e) => {
-  const todoId = $(e.target.parentElement.parentElement).data('id');
+  const todoId = $(e.target.parentElement.parentElement)
+    .data('id');
 
   const action = $.ajax(`/todos/${todoId}/duplicate`, {
     method: 'POST',
@@ -43,17 +46,26 @@ const onDuplicateTodo = (e) => {
 };
 
 const getTodoData = (todoElement) => {
-  const title = todoElement.find('.edit').val();
-  const completed = todoElement.find('.toggle').is(':checked');
+  const title = todoElement.find('.edit')
+    .val();
+  const completed = todoElement.find('.toggle')
+    .is(':checked');
   const id = todoElement.data('id');
-  return { id, title, completed };
+  return {
+    id,
+    title,
+    completed
+  };
 };
 
 const sendUpdateRequest = (newData) => {
   const action = $.ajax(`/todos/${newData.id}`, {
     contentType: 'application/json',
     method: 'PUT',
-    data: JSON.stringify({ title: newData.title, completed: newData.completed }),
+    data: JSON.stringify({
+      title: newData.title,
+      completed: newData.completed
+    }),
     dataType: 'json',
   });
 
@@ -61,7 +73,8 @@ const sendUpdateRequest = (newData) => {
 };
 
 const onUpdateTodo = (e) => {
-  if ($(e.target).hasClass('todo-label')) {
+  if ($(e.target)
+    .hasClass('todo-label')) {
     const todoElement = $(e.target.parentElement.parentElement);
     const editingElement = $(e.target.parentElement.nextElementSibling);
     todoElement.addClass('editing');
@@ -69,21 +82,25 @@ const onUpdateTodo = (e) => {
     const inputLength = editingElement.val().length;
     editingElement[0].setSelectionRange(inputLength, inputLength); // Focusing on end of input
 
-    $(editingElement).on('keydown', (kbEvent) => {
-      if (kbEvent.keyCode === 27) { // Escape Key - Cancel action
-        $('.editing').removeClass('editing');
-      }
-    });
+    $(editingElement)
+      .on('keydown', (kbEvent) => {
+        if (kbEvent.keyCode === 27) { // Escape Key - Cancel action
+          $('.editing')
+            .removeClass('editing');
+        }
+      });
 
-    $(editingElement).on('keypress', (kbEvent) => {
-      if (kbEvent.keyCode === 13) { // Enter Key - Confirm action
-        const contextTodoElement = $(kbEvent.target.parentElement);
-        const newData = getTodoData(contextTodoElement);
+    $(editingElement)
+      .on('keypress', (kbEvent) => {
+        if (kbEvent.keyCode === 13) { // Enter Key - Confirm action
+          const contextTodoElement = $(kbEvent.target.parentElement);
+          const newData = getTodoData(contextTodoElement);
 
-        sendUpdateRequest(newData);
-      }
-    });
-  } else if ($(e.target).hasClass('toggle')) {
+          sendUpdateRequest(newData);
+        }
+      });
+  } else if ($(e.target)
+    .hasClass('toggle')) {
     const todoElement = $(e.target.parentElement.parentElement);
     const newData = getTodoData(todoElement);
 

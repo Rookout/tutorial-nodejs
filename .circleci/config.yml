@@ -47,7 +47,7 @@ references:
 jobs:
   checkout_code_upver:
     docker:
-      - image: google/cloud-sdk:latest
+      - image: python:2.7
     working_directory: ~/nodetut
     steps:
       - *checkout_default_wd

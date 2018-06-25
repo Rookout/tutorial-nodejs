@@ -67,34 +67,6 @@ jobs:
           paths:
             - workspace/VERSION
 
-  # test:
-  #   docker:
-  #     - image: google/cloud-sdk:latest
-  #   working_directory: ~/nodetut
-  #   steps:
-  #     - *load_cache
-  #     - *setup_workspace
-  #     - *setup_docker_layer_caching
-  #     - run:
-  #         name: Create Docker Image
-  #         command: |
-  #           docker build -t rookout/tutorial-nodejs:$CIRCLE_BUILD_NUM .
-  #     - run:
-  #         name: Run Detached Docker Image
-  #         command: |
-  #           docker run -d -p 4000:4000 --name tutorial-nodejs -e ROOKOUT_TOKEN=$DEMO_TOKEN -e ROOKOUT_AGENT_HOST=cloud.agent.rookout.com -e ROOKOUT_AGENT_PORT=443 rookout/tutorial-nodejs:$CIRCLE_BUILD_NUM
-  #           sleep 5
-  #     - run:
-  #         name: Test Linting
-  #         command: |
-  #           docker exec tutorial-nodejs npm i -g eslint eslint-config-airbnb-base eslint-plugin-import
-  #           docker exec tutorial-nodejs npm run lint
-  #     - run:
-  #         name: Test Docker Image Accessibility
-  #         command: |
-  #           docker exec tutorial-nodejs wget --retry 10 --retry-connrefused -v http://localhost:4000
-
-
   build_and_push_nodetut_image:
     docker:
       - image: google/cloud-sdk:latest
@@ -113,10 +85,7 @@ workflows:
   deploy-pipeline:
     jobs:
       - checkout_code_upver
-      # - test:
-      #     requires:
-      #       - checkout_code_upver
       - build_and_push_nodetut_image:
           requires:
-            - techeckout_code_upverst
+            - checkout_code_upver
           <<: *filter_master

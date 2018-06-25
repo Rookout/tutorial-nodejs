@@ -78,11 +78,11 @@ jobs:
       - run:
           name: Create Docker Image
           command: |
-            docker build --no-cache -t rookout/tutorial-nodejs .
+            docker build --no-cache -t rookout/tutorial-nodejs:$CIRCLE_BUILD_NUM .
       - run:
           name: Run Detached Docker Image
           command: |
-            docker run -d -p 4000:4000 --name tutorial-nodejs rookout/tutorial-nodejs
+            docker run -d -p 4000:4000 --name tutorial-nodejs rookout/tutorial-nodejs:$CIRCLE_BUILD_NUM
             sleep 5
       - run:
           name: Test Linting

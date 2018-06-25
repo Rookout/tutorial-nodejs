@@ -1,29 +1,119 @@
-version: 2
+version: 3
+
+references:
+  docker_auth: &docker_auth
+    auth:
+      username: _json_key
+      password: $GOOGLE_AUTH
+
+  checkout_default_wd: &checkout_default_wd
+    checkout:
+      path: ~/nodetut
+
+  load_cache: &load_cache
+    restore_cache:
+      keys:
+        - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+
+  load_version: &load_version
+    run: cat ~/nodetut/workspace/VERSION >> $BASH_ENV
+
+  setup_workspace: &setup_workspace
+    attach_workspace:
+      at: ~/nodetut
+
+  setup_docker_layer_caching: &setup_docker_layer_caching
+    setup_remote_docker:
+      docker_layer_caching: true
+
+  setup_build_tools: &setup_build_tools
+    run:
+      command: |
+        mkdir -p ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+        pip install -e git+ssh://git@github.com/Rookout/build_tools.git#egg=rookout_build_tools
+
+  setup_make: &setup_make
+    run: sudo apt-get update -q && sudo apt-get install --reinstall make
+
+  filter_master: &filter_master
+    filters:
+      branches:
+        only: master
+
+  docker_login: &docker_login
+    run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+
 jobs:
-  build:
-    working_directory: ~/tryme-tutorial
+  checkout_code_upver:
     docker:
-      - image: circleci/node:8.9.4
+      - image: python:2.7
+    working_directory: ~/nodetut
     steps:
-      - checkout
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-      - run: 
-          name: Install Dependencies
-          command: 'npm install'
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      - *checkout_default_wd
+      - *setup_workspace
+      - *setup_build_tools
+      - add_ssh_keys
       - run:
-          name: Run ESLint
-          command: 'npm run lint'
+          command: |
+            mkdir -p /root/nodetut/workspace
+            python -m rookout_build_tools.versioning.versions > /root/nodetut/workspace/VERSION
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/nodetut
+      - persist_to_workspace:
+          root: .
+          paths:
+            - workspace/VERSION
+
+  test:
+    docker:
+      - image: node:8
+    working_directory: ~/nodetut
+    steps:
+      - *setup_docker_layer_caching
+      - run:
+          name: Create Docker Image
+          command: |
+            docker build -t rookout/tutorial-nodejs .
+      - run:
+          name: Run Detached Docker Image
+          command: |
+            docker run -d -p 4000:4000 --name tutorial-nodejs rookout/tutorial-nodejs
+            sleep 5
+      - run:
+          name: Test Linting
+          command: |
+            docker exec tutorial-nodejs npm i -g eslint eslint-config-airbnb-base eslint-plugin-import
+            docker exec tutorial-nodejs npm run lint
+      - run:
+          name: Test Docker Image Accessibility
+          command: |
+            docker exec tutorial-nodejs curl --retry 10 --retry-delay 5 --retry-connrefused -v http://localhost:4000
+
+
+  build_and_push_nodetut_image:
+    docker:
+      - image: google/cloud-sdk:latest
+    working_directory: ~/nodetut
+    steps:
+      - *load_cache
+      - *setup_workspace
+      - *load_version
+      - *setup_docker_layer_caching
+      - *docker_login
+      - run: apt install make -y
+      - run: make build-and-upload
+
 workflows:
   version: 2
-  build_and_test:
+  deploy-pipeline:
     jobs:
-      - build
+      - checkout_code_upver
+      - test:
+          <<: *filter_master
+      - build_and_push_nodetut_image:
+          requires:
+            - test
+          <<: *filter_master

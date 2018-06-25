@@ -95,15 +95,15 @@ jobs:
 
   build_and_push_nodetut_image:
     docker:
-      - image: node:8
+      - image: google/cloud-sdk:latest
     working_directory: ~/nodetut
     steps:
       - *load_cache
       - *setup_workspace
       - *load_version
-      - *setup_make
       - *setup_docker_layer_caching
       - *docker_login
+      - run: apt install make -y
       - run: make build-and-upload
 
 workflows:

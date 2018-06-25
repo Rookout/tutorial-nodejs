@@ -87,8 +87,8 @@ jobs:
       - run:
           name: Test Linting
           command: |
-            docker exec tutorial-nodejs npm i eslint eslint-config-airbnb-base eslint-plugin-import
-            docker exec tutorial-nodejs npm run lint
+            docker exec tutorial-nodejs npm i -g eslint eslint-config-airbnb-base eslint-plugin-import
+            docker exec tutorial-nodejs eslint index.js src -c ./.eslintrc.json
       - run:
           name: Test Docker Image Accessibility
           command: |

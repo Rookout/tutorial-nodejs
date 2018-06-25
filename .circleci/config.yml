@@ -72,7 +72,6 @@ jobs:
       - image: google/cloud-sdk:latest
     working_directory: ~/nodetut
     steps:
-      - *load_cache
       - *setup_workspace
       - *setup_docker_layer_caching
       - run:

@@ -47,7 +47,7 @@ references:
 jobs:
   checkout_code_upver:
     docker:
-      - image: circleci/node:8.9.4
+      - image: google/cloud-sdk:latest
     working_directory: ~/nodetut
     steps:
       - *checkout_default_wd

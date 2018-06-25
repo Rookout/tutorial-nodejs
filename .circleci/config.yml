@@ -69,7 +69,7 @@ jobs:
 
   test:
     docker:
-      - image: circleci/node:8.9.4
+      - image: node:8
     working_directory: ~/nodetut
     steps:
       - *setup_docker_layer_caching
@@ -95,7 +95,7 @@ jobs:
 
   build_and_push_nodetut_image:
     docker:
-      - image: circleci/node:8.9.4
+      - image: node:8
     working_directory: ~/nodetut
     steps:
       - *load_cache

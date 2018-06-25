@@ -13,7 +13,7 @@ references:
   load_cache: &load_cache
     restore_cache:
       keys:
-        - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+        - v2-repo-{{ .Environment.CIRCLE_SHA1 }}
 
   load_version: &load_version
     run: cat ~/nodetut/workspace/VERSION >> $BASH_ENV
@@ -59,7 +59,7 @@ jobs:
             mkdir -p /root/nodetut/workspace
             python -m rookout_build_tools.versioning.versions > /root/nodetut/workspace/VERSION
       - save_cache:
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/nodetut
       - persist_to_workspace:
@@ -72,6 +72,7 @@ jobs:
       - image: google/cloud-sdk:latest
     working_directory: ~/nodetut
     steps:
+      - *load_cache
       - *setup_workspace
       - *setup_docker_layer_caching
       - run:

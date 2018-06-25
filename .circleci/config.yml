@@ -1,29 +1,73 @@
-version: 2
+version: 3
+
+references:
+  docker_auth: &docker_auth
+    auth:
+      username: _json_key
+      password: $GOOGLE_AUTH
+
+  checkout_default_wd: &checkout_default_wd
+    checkout:
+      path: ~/nodetut
+
+  load_cache: &load_cache
+    restore_cache:
+      keys:
+        - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+
+  setup_workspace: &setup_workspace
+    attach_workspace:
+      at: ~/nodetut
+
+  setup_docker_layer_caching: &setup_docker_layer_caching
+    setup_remote_docker:
+      docker_layer_caching: true
+
+  setup_make: &setup_make
+    run: sudo apt-get update -q && sudo apt-get install --reinstall make
+
+  filter_master: &filter_master
+    filters:
+      branches:
+        only: master
+
+  docker_login: &docker_login
+    run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+
 jobs:
-  build:
-    working_directory: ~/tryme-tutorial
+
+  checkout_code_upver:
     docker:
       - image: circleci/node:8.9.4
+    working_directory: ~/nodetut
     steps:
-      - checkout
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-      - run: 
-          name: Install Dependencies
-          command: 'npm install'
+      - *checkout_default_wd
+      - *setup_workspace
+      - add_ssh_keys
       - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run:
-          name: Run ESLint
-          command: 'npm run lint'
+            - ~/nodetut
+
+  build_and_push_nodetut_image:
+    docker:
+      - image: circleci/node:8.9.4
+    working_directory: ~/nodetut
+    steps:
+      - *load_cache
+      - *setup_workspace
+      - *setup_make
+      - *setup_docker_layer_caching
+      - *docker_login
+      - run: make build-and-upload
+
 workflows:
   version: 2
-  build_and_test:
+  deploy-pipeline:
     jobs:
-      - build
+      - checkout_code_upver
+      - build_and_push_nodetut_image:
+          requires:
+            - checkout_code_upver
+          <<: *filter_master

@@ -10,3 +10,13 @@ install-rookout-agent:
 
 install-dependencies:
 	npm install --production
+
+build:
+	docker build --tag rookout/tutorial-nodejs:latest .
+
+upload:
+	@if [ ${CIRCLE_BRANCH} = "master" ]; then \
+		docker push rookout/tutorial-nodejs:latest; \
+	fi
+
+build-and-upload: build upload

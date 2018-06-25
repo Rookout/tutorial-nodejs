@@ -78,7 +78,7 @@ jobs:
       - run:
           name: Create Docker Image
           command: |
-            docker build -t rookout/tutorial-nodejs .
+            docker build --no-cache -t rookout/tutorial-nodejs .
       - run:
           name: Run Detached Docker Image
           command: |

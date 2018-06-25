@@ -1,6 +1,6 @@
 # Rookout official tutorial for using Node.JS
 
-[![CircleCI](https://circleci.com/gh/Rookout/tryme-tutorial/tree/master.svg?style=svg)](https://circleci.com/gh/Rookout/tryme-tutorial/tree/master)
+[![CircleCI](https://circleci.com/gh/Rookout/tutorial-nodejs/tree/master.svg?style=svg)](https://circleci.com/gh/Rookout/tutorial-nodejs/tree/master)
 [![License][license-image]][license-url]
 [![Docs][docs-image]][docs-url]
 [![GitHub version][version-badge]](https://badge.fury.io/gh/rookout%2Ftryme-tutorial)

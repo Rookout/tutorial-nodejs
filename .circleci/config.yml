@@ -13,7 +13,7 @@ references:
   load_cache: &load_cache
     restore_cache:
       keys:
-        - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+        - v2-repo-{{ .Environment.CIRCLE_SHA1 }}
 
   load_version: &load_version
     run: cat ~/nodetut/workspace/VERSION >> $BASH_ENV
@@ -59,39 +59,13 @@ jobs:
             mkdir -p /root/nodetut/workspace
             python -m rookout_build_tools.versioning.versions > /root/nodetut/workspace/VERSION
       - save_cache:
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/nodetut
       - persist_to_workspace:
           root: .
           paths:
             - workspace/VERSION
-
-  test:
-    docker:
-      - image: node:8
-    working_directory: ~/nodetut
-    steps:
-      - *setup_docker_layer_caching
-      - run:
-          name: Create Docker Image
-          command: |
-            docker build -t rookout/tutorial-nodejs .
-      - run:
-          name: Run Detached Docker Image
-          command: |
-            docker run -d -p 4000:4000 --name tutorial-nodejs rookout/tutorial-nodejs
-            sleep 5
-      - run:
-          name: Test Linting
-          command: |
-            docker exec tutorial-nodejs npm i -g eslint eslint-config-airbnb-base eslint-plugin-import
-            docker exec tutorial-nodejs npm run lint
-      - run:
-          name: Test Docker Image Accessibility
-          command: |
-            docker exec tutorial-nodejs curl --retry 10 --retry-delay 5 --retry-connrefused -v http://localhost:4000
-
 
   build_and_push_nodetut_image:
     docker:
@@ -111,9 +85,7 @@ workflows:
   deploy-pipeline:
     jobs:
       - checkout_code_upver
-      - test:
-          <<: *filter_master
       - build_and_push_nodetut_image:
           requires:
-            - test
+            - checkout_code_upver
           <<: *filter_master

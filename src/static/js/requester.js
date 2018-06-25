@@ -54,7 +54,7 @@ const getTodoData = (todoElement) => {
   return {
     id,
     title,
-    completed
+    completed,
   };
 };
 
@@ -64,7 +64,7 @@ const sendUpdateRequest = (newData) => {
     method: 'PUT',
     data: JSON.stringify({
       title: newData.title,
-      completed: newData.completed
+      completed: newData.completed,
     }),
     dataType: 'json',
   });

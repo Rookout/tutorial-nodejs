@@ -56,8 +56,8 @@ jobs:
       - add_ssh_keys
       - run:
           command: |
-            mkdir -p /root/nodetut/workspace
-            python -m rookout_build_tools.versioning.versions > /root/nodetut/workspace/VERSION
+            mkdir -p ~/nodetut/workspace
+            rbt version get-next > ~/nodetut/workspace/VERSION
       - save_cache:
           key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:

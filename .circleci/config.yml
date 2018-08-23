@@ -1,6 +1,15 @@
 version: 3
 
 references:
+  auth_google: &auth_google
+    run:
+      command: |
+        echo ${GOOGLE_AUTH} > gcp-key.json && gcloud auth activate-service-account --key-file gcp-key.json
+        gcloud --quiet config set project ${GOOGLE_PROJECT_ID} && gcloud docker --authorize-only
+
+  disable_strict_git: &disable_strict_git
+    run: mkdir -p ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+
   docker_auth: &docker_auth
     auth:
       username: _json_key
@@ -8,7 +17,7 @@ references:
 
   checkout_default_wd: &checkout_default_wd
     checkout:
-      path: ~/nodetut
+      path: ~/demo
 
   load_cache: &load_cache
     restore_cache:
@@ -16,11 +25,11 @@ references:
         - v2-repo-{{ .Environment.CIRCLE_SHA1 }}
 
   load_version: &load_version
-    run: cat ~/nodetut/workspace/VERSION >> $BASH_ENV
+    run: cat ~/demo/workspace/VERSION >> $BASH_ENV
 
   setup_workspace: &setup_workspace
     attach_workspace:
-      at: ~/nodetut
+      at: ~/demo
 
   setup_docker_layer_caching: &setup_docker_layer_caching
     setup_remote_docker:
@@ -48,7 +57,7 @@ jobs:
   checkout_code_upver:
     docker:
       - image: python:2.7
-    working_directory: ~/nodetut
+    working_directory: ~/demo
     steps:
       - *checkout_default_wd
       - *setup_workspace
@@ -56,21 +65,21 @@ jobs:
       - add_ssh_keys
       - run:
           command: |
-            mkdir -p ~/nodetut/workspace
-            rbt version get-next > ~/nodetut/workspace/VERSION
+            mkdir -p ~/demo/workspace
+            rbt version get-next > ~/demo/workspace/VERSION
       - save_cache:
           key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - ~/nodetut
+            - ~/demo
       - persist_to_workspace:
           root: .
           paths:
             - workspace/VERSION
 
-  build_and_push_nodetut_image:
+  build_and_push_demo_image:
     docker:
       - image: google/cloud-sdk:latest
-    working_directory: ~/nodetut
+    working_directory: ~/demo
     steps:
       - *load_cache
       - *setup_workspace
@@ -80,12 +89,52 @@ jobs:
       - run: apt install make -y
       - run: make build-and-upload
 
+  deploy_demo:
+    docker:
+      - image: google/cloud-sdk:latest
+    working_directory: ~/demo
+    steps:
+      - add_ssh_keys
+      - *disable_strict_git
+      - *load_cache
+      - *setup_workspace
+      - *auth_google
+      - *load_version
+      - run: git clone git@github.com:Rookout/deployment-demo
+      - run: apt install make -y
+      - run: export GOOGLE_APPLICATION_CREDENTIALS=/root/demo/gcp-key.json && cd deployment-demo && export env=staging && make deploy-demo
+      - run: export GOOGLE_APPLICATION_CREDENTIALS=/root/demo/gcp-key.json && cd deployment-demo && export env=production && make deploy-demo
+
+  test_demo_servers_up:
+    docker:
+        - image: google/cloud-sdk:latest
+    working_directory: ~/demo
+    steps:
+      - run: sleep 15 && echo "Checking Staging..."
+      - run: curl 'http://staging.machina.rookout-demo.com/account/register'
+      - run: curl 'http://staging.python.rookout-demo.com/'
+      - run: curl 'http://staging.java.rookout-demo.com/'
+      - run: curl 'http://staging.nodejs.rookout-demo.com/'
+      - run: sleep 15 && echo "Checking Production..."
+      - run: curl 'http://machina.rookout-demo.com/account/register'
+      - run: curl 'http://python.rookout-demo.com/'
+      - run: curl 'http://java.rookout-demo.com/'
+      - run: curl 'http://nodejs.rookout-demo.com/'
+
 workflows:
   version: 2
   deploy-pipeline:
     jobs:
       - checkout_code_upver
-      - build_and_push_nodetut_image:
+      - build_and_push_demo_image:
           requires:
             - checkout_code_upver
+          <<: *filter_master
+      - deploy_demo:
+          requires:
+            - build_and_push_image
+          <<: *filter_master
+      - test_demo_servers_up:
+          requires:
+            - deploy_demo
           <<: *filter_master

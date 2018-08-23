@@ -132,7 +132,7 @@ workflows:
           <<: *filter_master
       - deploy_demo:
           requires:
-            - build_and_push_image
+            - build_and_push_demo_image
           <<: *filter_master
       - test_demo_servers_up:
           requires:

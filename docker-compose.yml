@@ -1,20 +1,22 @@
 version: '3'
 
 services:
-  todoapp:
-    container_name: todoapp
+  tutorial-node:
+    container_name: nodetodo
     restart: always
+    image: rookout/tutorial-nodejs
     build: .
     environment:
-      - ROOKOUT_AGENT_HOST=rookout-agent
+    - ROOKOUT_AGENT_HOST=rookout-agent
     ports:
-      - "4000:4000"
+    - "4000:4000"
     links:
-      - rookout-agent
+    - rookout-agent
   rookout-agent:
-    container_name: rookout-agent
+    # The container name must be unique for each tutorial!
+    container_name: rookout-agent-nodetut
     image: rookout/agent
     environment:
-      - ROOKOUT_TOKEN=$ROOKOUT_TOKEN
+    - ROOKOUT_TOKEN=$ROOKOUT_TOKEN
     ports:
-      - "7486:7486"
+    - "7486:7486"

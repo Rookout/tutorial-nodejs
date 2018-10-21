@@ -29,18 +29,19 @@ git clone https://github.com/Rookout/tutorial-nodejs.git
 cd tutorial-nodejs
 ``` 
 
-2. Set your agent token in an ENV variable 
+2. Set your Rookout token in an ENV variable 
 
 ```bash
 export ROOKOUT_TOKEN=YOUR_TOKEN_IN_HERE
 ```
      
-3. Build the app then run the agent & app
+3. Build and run the app
 
-- Option 1 - Running the app and agent with docker compose
+- Option 1 - Running with docker
 
 ```bash
-docker-compose up
+docker build . -t tutorial-nodejs
+docker run -p 4000:4000 -e ROOKOUT_TOKEN=$ROOKOUT_TOKEN tutorial-nodejs
 ```
 
 - Options 2 - Without Docker (**Linux only**):
@@ -48,18 +49,10 @@ docker-compose up
 ```bash
 make -j run-prod
 ```
-    
-- Options 3 - Running the agent ONLY in docker and the app locally (All platforms)
-
-```bash
-docker-compose up rookout-agent
-# To run in the background: docker-compose up -d rookout-agent
-make start-web
-```
 
 ## Usage
 
-- After running the app & agent go to [https://app.rookout.com/][rookout-app-url] and **Log In**
+- After running the app go to [https://app.rookout.com/][rookout-app-url] and **Log In**
 - Add the source code according to the instructions using the left pane **Source View**
 
     <details>
@@ -100,7 +93,7 @@ Go through the [bug list](BUGHUNT.md) and follow instructions to see some basic 
 ## Rules Common Issues
 
 - Rule status is RED -- Hash mismatch. It means the file used in the server is not the same file used from github/local server in app.rookout.com
-- Rule status is GRAY -- No rook connected to the agent. Make sure you have inserted the token in the right place and that connection is made properly.
+- Rule status is GRAY -- No rook connected. Make sure you have inserted the token in the right place and that connection is made properly.
 
 ## Want to learn more ?
 

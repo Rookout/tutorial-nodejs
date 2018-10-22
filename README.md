@@ -44,10 +44,12 @@ docker build . -t tutorial-nodejs
 docker run -p 4000:4000 -e ROOKOUT_TOKEN=$ROOKOUT_TOKEN tutorial-nodejs
 ```
 
-- Options 2 - Without Docker (**Linux only**):
+
+- Options 2 - Without Docker:
 
 ```bash
-make -j run-prod
+npm install
+node ./index.js
 ```
 
 ## Usage

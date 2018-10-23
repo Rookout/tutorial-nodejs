@@ -37,19 +37,17 @@ export ROOKOUT_TOKEN=YOUR_TOKEN_IN_HERE
      
 3. Build and run the app
 
-- Option 1 - Running with docker
+- Option 1 - Without Docker:
+
+```bash
+npm run tutorial
+```
+
+- Option 2 - Running with docker
 
 ```bash
 docker build . -t tutorial-nodejs
 docker run -p 4000:4000 -e ROOKOUT_TOKEN=$ROOKOUT_TOKEN tutorial-nodejs
-```
-
-
-- Options 2 - Without Docker:
-
-```bash
-npm install
-node ./index.js
 ```
 
 ## Usage

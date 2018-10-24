@@ -40,7 +40,7 @@ export ROOKOUT_TOKEN=YOUR_TOKEN_IN_HERE
 - Option 1 - Without Docker:
 
 ```bash
-npm run tutorial
+npm start
 ```
 
 - Option 2 - Running with docker

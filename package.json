@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint index.js src",
-    "start": "node index.js",
-    "tutorial": "npm install && node index.js",
+    "start": "npm install && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mickael Alliel",

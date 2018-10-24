@@ -18,7 +18,7 @@ This is the official [rookout][rookout-getting-started] Node.JS tutorial
 ## Prerequisites
 
 1. Docker - https://www.docker.com/get-docker
-2. Node.JS v8.X.X + NPM 
+2. Node.JS 10 + NPM 
 
 ## Installation
 

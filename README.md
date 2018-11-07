@@ -46,8 +46,7 @@ npm start
 - Option 2 - Running with docker
 
 ```bash
-docker build . -t tutorial-nodejs
-docker run -p 4000:4000 -e ROOKOUT_TOKEN=$ROOKOUT_TOKEN tutorial-nodejs
+docker run -p 4000:4000 -e ROOKOUT_TOKEN=$ROOKOUT_TOKEN rookout/tutorial-nodejs
 ```
 
 ## Usage

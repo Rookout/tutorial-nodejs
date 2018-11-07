@@ -1,4 +1,4 @@
-const rook = require('rookout/auto_start'); // eslint-disable-line no-unused-vars
+const rookout = require('rookout');
 const express = require('express');
 
 const app = express();
@@ -9,6 +9,9 @@ const config = require('./config');
 const path = require('path');
 const Router = require('./routes/router');
 const Store = require('./utils/store');
+
+// Enable Rookout
+rookout.start();
 
 // Initializing global Store as an in-memory database
 global.Store = new Store();

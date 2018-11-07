@@ -11,9 +11,7 @@ const Router = require('./routes/router');
 const Store = require('./utils/store');
 
 // Enable Rookout
-rookout.start({
-  token: process.env.ROOKOUT_TOKEN
-})
+rookout.start();
 
 // Initializing global Store as an in-memory database
 global.Store = new Store();

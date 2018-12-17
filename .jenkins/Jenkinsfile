@@ -1,0 +1,30 @@
+import org.rookout.files.Utilities
+import org.rookout.testsUtil.TestUtilities
+
+def label = "worker-${UUID.randomUUID().toString()}"
+
+podCreator.initMain(label: label) {
+    node(label) {
+        print(pwd())
+        container('rookout-helm') {
+            stage ('Getting test') {
+            def myRepo = checkout scm
+            env.GIT_BRANCH = myRepo.GIT_BRANCH.replaceAll('/|_', '-')
+            if ("master".equals(env.GIT_BRANCH)) {
+                def scriptToUse = libraryResource 'generate_tests.groovy'
+                def jobName = "tutorial-nodejs"
+                def dockerTag = TestUtilities.getDockerTagNameForRegression(jobName)
+                sh("docker build . -t ${dockerTag} && gcloud docker -- push ${dockerTag}")
+                TestUtilities.createTest(this, scriptToUse, jobName, pwd() + "/.jenkins", "Jenkinsfile.test")
+                stage ('Run the tests') {
+                    triggerer.regression(GIT_BRANCH : "master"){
+                    }
+                }
+            }
+            
+        }
+    }
+
+    }
+}
+

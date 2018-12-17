@@ -1,0 +1,8 @@
+regressionTest {
+    FILE_PATH =  "src/services/getTodosByFilter.js"
+    LINE_NUM =  "22" 
+    SHA =  "91c128b2bc7a1aa1a0edc190eec7db2945e3139fa545b7f3cc60200d98dc15fe"
+    LANG = "NodeJs"
+    BACKGROUND_IMAGE_CMD = "node /usr/src/app/index.js &"
+    URL_FOR_TRIGGER = "http://localhost:4000"
+}

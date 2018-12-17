@@ -15,15 +15,6 @@
 
 .venv/
 .venv3/
-python-virtualenv/
-test_virtualenv/
-venv/
-venv2/
-virtualenv_linux/
-virtualenv_pypy/
-virtualenv/
-virtualenv3/
-local_secret/
 
 .project
 .cache/
@@ -46,29 +37,7 @@ log.txt
 static_codegen/
 temp/
 
-lib/temp.json
-lib/test.json
-rooks/jvm/rook/config.json
-rooks/jvm/rook/src/main/proto/com/rookout/rook/rook.proto
-rooks/node/sample/
-rooks/node/rook/rookout-*.tgz
-rooks/python/Profile.prof
-rooks/python/rook/lib/
-rooks/python/rook/services/bdb.c
-rooks/python/rook/services/bdb.pyd
-rooks/python/rook/services/pyx_bdb.c
-temp.json
-test_all.json
-test.json
-test.txt
-
 .vscode
 cmake-*
 *.auto.*
 java-rook.log*
-NamespaceSerializerTS.test.js
-
-
-ignore_no_sources.js
-ignore_with_sources.js
-ignore_with_sources_bad_hash.js

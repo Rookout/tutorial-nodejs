@@ -102,8 +102,8 @@ jobs:
       - *load_version
       - run: git clone git@github.com:Rookout/deployment-demo
       - run: apt install make -y
-      - run: export GOOGLE_APPLICATION_CREDENTIALS=/root/demo/gcp-key.json && cd deployment-demo && export env=staging && make deploy-demo
-      - run: export GOOGLE_APPLICATION_CREDENTIALS=/root/demo/gcp-key.json && cd deployment-demo && export env=production && make deploy-demo
+      - run: export GOOGLE_APPLICATION_CREDENTIALS=/root/demo/gcp-key.json && cd deployment-demo && export env=staging && make install-helm deploy-demo
+      - run: export GOOGLE_APPLICATION_CREDENTIALS=/root/demo/gcp-key.json && cd deployment-demo && export env=production && make install-helm deploy-demo
 
   test_demo_servers_up:
     docker:

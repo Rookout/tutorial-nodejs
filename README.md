@@ -81,18 +81,18 @@ docker run -p 4000:4000 -e ROOKOUT_TOKEN=$ROOKOUT_TOKEN rookout/tutorial-nodejs
     
     
 - Open the file `src/handlers/homePage.js`
-- Add a default (Dump Frame) rule to line 5 by clicking next the the line number in the file viewer
-- Looking at the right-hand pane **Rules**, you will see the rule and the line number where you added it - it should be GREEN.
-    - If this is not the case, [click here](#rules-common-issues) to see how to fix that
-- Go the the app page [http://localhost:4000/](http://localhost:4000/) in order to trigger the rule
-- Check the bottom pane **Messages** and you'll see the dumpframe you just added, as it was triggered by the handler of the web page when you accessed it
+- Add a Snapshot Breakpoint to line 5 by clicking next the the line number in the file viewer
+- Looking at the right-hand pane **Breakpoints**, you will see the breakpoint and the line number where you added it - it should be GREEN.
+    - If this is not the case, [click here](https://docs.rookout.com/docs/breakpoints-status.html) to see how to fix that
+- Go the the app page [http://localhost:4000/](http://localhost:4000/) in order to trigger the breakpoint
+- Check the bottom pane **Messages** and you'll see the snapshot you just added, as it was triggered by the handler of the web page when you accessed it
 
 Go through the [bug list](BUGHUNT.md) and follow instructions to see some basic use cases.
 
-## Rules Common Issues
+## Common Pitfalls
 
-- Rule status is RED -- Hash mismatch. It means the file used in the server is not the same file used from github/local server in app.rookout.com
-- Rule status is GRAY -- No rook connected. Make sure you have inserted the token in the right place and that connection is made properly.
+- Breakpoint status is RED -- Hash mismatch. It means the file used in the server is not the same file used from github/local server in app.rookout.com
+- Breakpoint status is GRAY -- No app connected. Make sure you have inserted the Rookout Token in the right place and that connection is made properly.
 
 ## Want to learn more ?
 

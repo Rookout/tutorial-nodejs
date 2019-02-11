@@ -121,6 +121,14 @@ jobs:
       - run: curl --fail 'http://java.rookout-demo.com/'
       - run: curl --fail 'http://nodejs.rookout-demo.com/'
 
+  notify_slack:
+    docker:
+        - image: python:2.7
+    working_directory: ~/demo
+    steps:
+      - *setup_build_tools
+      - run: rbt notify deployment -t demo-deployed
+
 workflows:
   version: 2
   deploy-pipeline:
@@ -137,4 +145,8 @@ workflows:
       - test_demo_servers_up:
           requires:
             - deploy_demo
+          <<: *filter_master
+      - notify_slack:
+          requires:
+            - test_demo_servers_up
           <<: *filter_master

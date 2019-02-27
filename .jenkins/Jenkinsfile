@@ -19,7 +19,7 @@ podCreator.initMain(label: label) {
                 stage ('Run the tests') {
                     def packageJsonData = readJSON file: pwd() + "/package.json"
                     println(packageJsonData)
-                    def rookotVersionInFile = data["dependencies"]["rookout"].replace("^","")
+                    def rookotVersionInFile = packageJsonData["dependencies"]["rookout"].replace("^","")
                     println(rookotVersionInFile)
                     triggerer.regression(GIT_BRANCH : "Rooks/NodeJS-v${rookotVersionInFile}", EXTRACT_VERSION_FROM_BRANCH: true ){
                     }

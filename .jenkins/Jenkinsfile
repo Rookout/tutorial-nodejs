@@ -21,7 +21,7 @@ podCreator.initMain(label: label) {
                     println(packageJsonData)
                     def rookotVersionInFile = data["dependencies"]["rookout"].replace("^","")
                     println(rookotVersionInFile)
-                    triggerer.regression(GIT_BRANCH : "Rooks/NodeJS-v${rookotVersionInFile}"){
+                    triggerer.regression(GIT_BRANCH : "Rooks/NodeJS-v${rookotVersionInFile}", EXTRACT_VERSION_FROM_BRANCH: true ){
                     }
                 }
             }

@@ -105,6 +105,7 @@ jobs:
       - run: export GOOGLE_APPLICATION_CREDENTIALS=/root/demo/gcp-key.json && cd deployment-demo && export env=staging && make install-helm deploy-demo
       - run: export GOOGLE_APPLICATION_CREDENTIALS=/root/demo/gcp-key.json && cd deployment-demo && export env=production && make install-helm deploy-demo
       - run: export GOOGLE_APPLICATION_CREDENTIALS=/root/demo/gcp-key.json && cd deployment-demo && export env=sandbox && make install-helm deploy-demo
+      - run: export GOOGLE_APPLICATION_CREDENTIALS=/root/demo/gcp-key.json && cd deployment-demo && export env=staging-sandbox && make install-helm deploy-demo
 
   test_demo_servers_up:
     docker:

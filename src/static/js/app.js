@@ -9,6 +9,6 @@ const setEventListeners = () => {
   $('.clear-completed').on('click', onClearCompleted);
 };
 
-$().ready(() => {
+$(document).ready(() => {
   setEventListeners();
 });

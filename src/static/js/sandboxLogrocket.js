@@ -37,7 +37,7 @@ function initLogrocket() {
 }
 
 
-$().ready(() => {
+$(document).ready(() => {
   // Follow sessions only in Sandbox
   if (document.location.hostname === 'sandbox.nodejs.demo.rookout.com') {
     initLogrocket();

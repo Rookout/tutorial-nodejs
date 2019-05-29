@@ -14,7 +14,7 @@ function identifySession(currentUser) {
 }
 
 function getCurrentUserAndIdentifySession() {
-  const currentUserUrl = 'https://app.rookout.com/apiv1/current_user';
+  const currentUserUrl = 'https://app.rookout.com/rest/v1/current_user';
 
   $.get({
     url: currentUserUrl,

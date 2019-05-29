@@ -6,6 +6,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', HomePageHandlers.homePage);
+router.get('/favicon.ico', (req, res) => res.status(204));
 router.get('/filter/:shown', HomePageHandlers.homePage);
 
 // restful endpoints:

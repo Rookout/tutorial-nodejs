@@ -5,7 +5,7 @@ function identifySession(currentUser) {
 
   if (window.LogRocket) {
     window.LogRocket.identify(currentUser.email, {
-      name: currentUser.nickname || currentUser.name,
+      name: currentUser.fullname || currentUser.username,
       email: currentUser.email,
 
       sandbox: true,

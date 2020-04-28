@@ -17,7 +17,7 @@
     "lodash": "^4.17.12",
     "morgan": "^1.9.1",
     "pug": "^2.0.3",
-    "rookout": "^0.1.88"
+    "rookout": "^0.1.99"
   },
   "devDependencies": {
     "eslint": "^4.19.1",

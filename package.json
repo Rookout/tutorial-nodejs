@@ -17,7 +17,7 @@
     "lodash": "^4.17.19",
     "morgan": "^1.9.1",
     "pug": "^2.0.3",
-    "rookout": "file:rooks-nodejs_3c2774144cea41916d8d1a43120da1ddf86f8344_rookout.tar"
+    "rookout": "file:rooks-nodejs_317aea44d4153367be510891c8a5c26406fc39b2_rookout.tar"
   },
   "devDependencies": {
     "eslint": "^4.19.1",

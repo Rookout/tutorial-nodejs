@@ -8,7 +8,7 @@
 })('f82ec424-cc04-47ca-5f5f-43c17ba69485');
 
 $(document).ready(() => {
-  // Follow sessions only in Sandbox
+  // Initialize only in Sandbox
   if (document.location.hostname === 'sandbox.nodejs.demo.rookout.com') {
     pendo.initialize();
   }

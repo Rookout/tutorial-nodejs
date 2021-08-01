@@ -17,7 +17,7 @@
     "lodash": "^4.17.21",
     "morgan": "^1.9.1",
     "pug": "^3.0.1",
-    "rookout": "^0.18.0",
+    "rookout": "^0.19.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {

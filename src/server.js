@@ -1,8 +1,9 @@
 const rookout = require('rookout');
 const express = require('express');
+const winston = require('winston');
+const expressWinston = require('express-winston');
 
 const app = express();
-const logger = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const config = require('./config');
@@ -17,7 +18,7 @@ rookout.start();
 global.Store = new Store();
 
 // Initialize Logging
-app.use(logger('combined'));
+app.use(expressWinston.logger({ transports: [new winston.transports.Console()] }));
 
 // Initialize CORS
 app.use(cors());

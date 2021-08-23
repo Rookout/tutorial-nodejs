@@ -1,7 +1,7 @@
 /* eslint prefer-destructuring: 0 no-console: 0 */
 const utils = require('./utils');
 const winston = require('winston');
-const logger = winston.createLogger({ transports: [new winston.transports.Console()] });
+const logger = winston.loggers.add({ transports: [new winston.transports.Console()] });
 
 const actionResult = (ok, message, errorCode = null, errorMessage = null) => ({
   ok,
@@ -20,7 +20,9 @@ const addNewTodo = async (title, completed) => {
     completed,
   })
     .then(null, (err) => {
-      logger.error(err);
+      if (err) {
+        logger.error(err);
+      }
     });
 
   logger.info(`added new todo with title: '${title}'`);
@@ -31,7 +33,9 @@ const getAll = async () => {
   logger.info('get all todos');
   const todos = await global.Store.findAll()
     .then(null, (err) => {
-      logger.error(err);
+      if (err) {
+        logger.error(err);
+      }
     });
 
   if (!todos) {
@@ -52,7 +56,9 @@ const add = async (req) => {
 
   const newTodo = addNewTodo(title, completed)
     .then(null, (err) => {
-      logger.error(err);
+      if (err) {
+        logger.error(err);
+      }
     });
 
   logger.info(`added new todo with the title '${title}'`);
@@ -71,7 +77,9 @@ const update = async (req) => {
 
   const todo = await global.Store.findById(todoId)
     .then(null, (err) => {
-      logger.error(err);
+      if (err) {
+        logger.error(err);
+      }
     });
   if (!todo) {
     return actionResult(false, null, 404, 'No todo found');
@@ -83,7 +91,9 @@ const update = async (req) => {
 
   const updatedTodo = await global.Store.save(todo, todoId)
     .then(null, (err) => {
-      logger.error(err);
+      if (err) {
+        logger.error(err);
+      }
     });
 
   logger.info(`updated todoId '${todoId}' to title '${title}'`);
@@ -100,7 +110,9 @@ const remove = async (req) => {
 
   await global.Store.remove(todoId)
     .then(null, (err) => {
-      logger.error(err);
+      if (err) {
+        logger.error(err);
+      }
     });
   logger.info(`removed the todo with the id '${todoId}'`);
   return actionResult(true, 'Deleted successfully');
@@ -122,7 +134,9 @@ const duplicate = async (req) => {
 
   const newTodo = addNewTodo(todo.completed, todo.title)
     .then(null, (err) => {
-      logger.error(err);
+      if (err) {
+        logger.error(err);
+      }
     });
 
   logger.info(`duplicated the todo with the id '${todoId}'`);
@@ -132,7 +146,9 @@ const duplicate = async (req) => {
 const toggleAll = async (req) => {
   await global.Store.ToggleAll()
     .then(null, (err) => {
-      logger.error(err);
+      if (err) {
+        logger.error(err);
+      }
     });
   return actionResult(true, 'Toggled all todos');
 };
@@ -141,7 +157,9 @@ const clearCompleted = async (req) => {
   logger.debug('clear completed todos request was received', { req });
   await global.Store.ClearCompleted()
     .then(null, (err) => {
-      logger.error(err);
+      if (err) {
+        logger.error(err);
+      }
     });
   logger.info('Cleared all complete todos');
   return actionResult(true, 'Cleared all complete todos');

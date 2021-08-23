@@ -1,7 +1,7 @@
 /* eslint prefer-destructuring: 0 no-console: 0 */
 const utils = require('./utils');
 const winston = require('winston');
-const logger = winston.createLogger({ transports: [new winston.transports.Console()] });
+const logger = winston.loggers.add({ transports: [new winston.transports.Console()] });
 
 const actionResult = (ok, message, errorCode = null, errorMessage = null) => ({
   ok,

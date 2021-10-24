@@ -1,5 +1,8 @@
 FROM node:8.9.4
 
+RUN apt-get install ca-certificates -y
+RUN update-ca-certificates -f
+
 ARG GIT_COMMIT=unspecified
 ENV ROOKOUT_COMMIT=$GIT_COMMIT
 

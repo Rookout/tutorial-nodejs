@@ -1,4 +1,4 @@
-FROM node:8.9.4
+FROM node:14.17.6
 
 ARG GIT_COMMIT=unspecified
 ENV ROOKOUT_COMMIT=$GIT_COMMIT

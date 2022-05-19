@@ -14,14 +14,14 @@ podCreator.initMain(label: label) {
                 def scriptToUse = libraryResource 'generate_tests.groovy'
                 def jobName = "tutorial-nodejs"
                 def dockerTag = TestUtilities.getDockerTagNameForRegression(jobName)
-                sh('docker build . -t ${dockerTag} --build-arg GIT_COMMIT=$(git rev-parse HEAD) --build-arg GIT_ORIGIN=$(git config --get remote.origin.url) && gcloud docker -- push ${dockerTag}')
+                sh("docker build . -t ${dockerTag} --build-arg GIT_COMMIT=\$(git rev-parse HEAD) --build-arg GIT_ORIGIN=\$(git config --get remote.origin.url) && gcloud docker -- push ${dockerTag}")
                 TestUtilities.createTest(this, scriptToUse, jobName, pwd() + "/.jenkins", "Jenkinsfile.test")
                 stage ('Run the tests') {
                     def packageJsonData = readJSON file: pwd() + "/package.json"
                     println(packageJsonData)
                     def rookotVersionInFile = packageJsonData["dependencies"]["rookout"].replace("^","")
                     println(rookotVersionInFile)
-                    triggerer.regression(GIT_BRANCH : "Rooks/NodeJS-v${rookotVersionInFile}", EXTRACT_VERSION_FROM_BRANCH: true ){
+                    triggerer.regressionEx(GIT_BRANCH : "Rooks/NodeJS-v${rookotVersionInFile}", GIT_REPO: "Rookout", LANGUAGE_TO_RUN: "node", EXTRACT_VERSION_FROM_BRANCH: true ){
                     }
                 }
             }

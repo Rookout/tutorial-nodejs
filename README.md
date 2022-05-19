@@ -51,53 +51,27 @@ docker run -p 4000:4000 -e ROOKOUT_TOKEN=$ROOKOUT_TOKEN rookout/tutorial-nodejs
 
 ## Usage
 
-- After running the app go to [https://app.rookout.com/][rookout-app-url] and **Log In**
-- Add the source code according to the instructions using the left pane **Source View**
-
-    <details>
-    <summary>More details</summary>
-    <p>
-    
-    #### Adding source code
-    
-    1. Click on Add source
-    1. Choose source control
-        - Github
-            - Click on Connect
-            - Authorize O-Auth
-            - Fill `Repository Owner`
-            - Click `Repository` and choose from the dropdown menu
-            - Click Next
-            - Choose the desired branch
-            - Click View Repository
-        - Local FileSystem - Server
-            - Click on Setup Server
-            - Choose a supported HTTP Server (Node.js)
-            - Leave the default port `8000` or choose your own
-            - Run your local server e.g. `simple-https -p 8000` in the right directory
-            - Click on Connect to Server
-    </p>
-    </details>
-    
-    
-- Open the file `src/handlers/homePage.js`
-- Add a Snapshot Breakpoint to line 5 by clicking next the the line number in the file viewer
-- Looking at the right-hand pane **Breakpoints**, you will see the breakpoint and the line number where you added it - it should be GREEN.
+- Log in to the [Rookout IDE](https://app.rookout.com/)
+- Set up your debug session by selecting the NodeJS app you started. See [Debug session setup](https://docs.rookout.com/docs/debug-session-setup) for more information
+- Add the source code according to the following [instructions](https://docs.rookout.com/docs/source-repos/). In this case, use the [local filesystem option](https://docs.rookout.com/docs/source-repos/) to associate the code in your local 'tutorial-nodejs' folder.
+- Open the file 'src/services/todos.js'
+- Add a Breakpoint to line 15 by clicking next the the line number in the file viewer
+- The breakpoint should turn solid purple, indicating that it has been set successfully and that it is active.
     - If this is not the case, [click here](https://docs.rookout.com/docs/breakpoints-status.html) to see how to fix that
-- Go the the app page [http://localhost:4000/](http://localhost:4000/) in order to trigger the breakpoint
-- Check the bottom pane **Messages** and you'll see the snapshot you just added, as it was triggered by the handler of the web page when you accessed it
-
-Go through the [bug list](BUGHUNT.md) and follow instructions to see some basic use cases.
+- Go the the app webpage [http://localhost:4000/](http://localhost:4000/) and add a todo in order to trigger the Breakpoint
+- Check the bottom pane **Messages** and you'll see the snapshot you just added, as it was triggered by the handler of the web api when you added a todo.
 
 ## Common Pitfalls
 
-- Breakpoint status is RED -- Hash mismatch. It means the file used in the server is not the same file used from github/local server in app.rookout.com
-- Breakpoint status is GRAY -- No app connected. Make sure you have inserted the Rookout Token in the right place and that connection is made properly.
+- Breakpoint status is pending (hollow with purple outline) -- Connection to the app was not able to be established. Make sure that you inserted the Rookout Token in the right place and that the SDK was properly installed.
+- Breakpoint status is disabled (solid grey) -- The breakpoint was disabled from collecting more data due to the limits being hit.
+- Brekapoint error -- something went wrong. Check the breakpoint status to get more information on the error type, and for more information go to our [breakpoint status guide](https://docs.rookout.com/docs/breakpoints-status/).
 
 ## Want to learn more ?
 
-- [Our documentation][docs-url] for more information
-- [our deployment examples][deployment-examples] for platform-specific integration examples
+- [Our website](https://rookout.com/) for more information
+- [Our documentation](https://docs.rookout.com/) for more information
+- [our deployment examples](https://docs.rookout.com/docs/deployment-examples.html) for platform-specific integration examples
 
 ## License
 [APACHE 2](LICENSE)

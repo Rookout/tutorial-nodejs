@@ -17,7 +17,7 @@
     "express-winston": "^4.1.0",
     "lodash": "^4.17.21",
     "pug": "^3.0.1",
-    "rookout": "^0.78.0",
+    "rookout": "^0.79.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {

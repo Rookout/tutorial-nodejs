@@ -107,17 +107,17 @@ jobs:
       - *setup_workspace
       - *load_version
       - *install_deps
-      - run: git config --global user.email "sonario@rookout.com"
+      - run: git config --global user.email "sonario@rookout.com" && git config --global user.name "sonariorobot"
       - run: git clone -b staging git@github.com:Rookout/gitops-demo.git
       - run: PUBLISH_VERSION=$(echo $NEW_VERSION | sed 's/inner-999/1/g') yq -i -v '.tutorialNodejs.image.tag = strenv(PUBLISH_VERSION)' gitops-demo/argocd/apps/values.yaml
       - run: cd gitops-demo && git add argocd/apps/values.yaml
       - run: cd gitops-demo && git commit -m "update tutorial-nodejs $NEW_VERSION"
-      - run: cd gitops-demo && git push --set-upstream origin staging
+      - run: cd gitops-demo && git push https://sonariorobot:$GITHUB_TOKEN@github.com/Rookout/gitops-demo.git staging
       - run: cd gitops-demo && git checkout production && git pull
       - run: PUBLISH_VERSION=$(echo $NEW_VERSION | sed 's/inner-999/1/g') yq -i -v '.tutorialNodejs.image.tag = strenv(PUBLISH_VERSION)' gitops-demo/argocd/apps/values.yaml
       - run: cd gitops-demo && git add argocd/apps/values.yaml
       - run: cd gitops-demo && git commit -m "update tutorial-nodejs $NEW_VERSION"
-      - run: cd gitops-demo && git push --set-upstream origin production
+      - run: cd gitops-demo && git push https://sonariorobot:$GITHUB_TOKEN@github.com/Rookout/gitops-demo.git production
 
   deploy_demo:
     docker:

@@ -119,24 +119,6 @@ jobs:
       - run: cd gitops-demo && git commit -m "update tutorial-nodejs $NEW_VERSION"
       - run: cd gitops-demo && git push https://sonariorobot:$GITHUB_TOKEN@github.com/Rookout/gitops-demo.git production
 
-  deploy_demo:
-    docker:
-      - image: google/cloud-sdk:latest
-    working_directory: ~/demo
-    steps:
-      - add_ssh_keys
-      - *disable_strict_git
-      - *load_cache
-      - *setup_workspace
-      - *auth_google
-      - *load_version
-      - run: git clone git@github.com:Rookout/deployment-demo
-      - run: apt install make -y
-      - run: export GOOGLE_APPLICATION_CREDENTIALS=/root/demo/gcp-key.json && cd deployment-demo && export env=staging && make install-helm deploy-demo
-      - run: export GOOGLE_APPLICATION_CREDENTIALS=/root/demo/gcp-key.json && cd deployment-demo && export env=production && make install-helm deploy-demo
-      - run: export GOOGLE_APPLICATION_CREDENTIALS=/root/demo/gcp-key.json && cd deployment-demo && export env=sandbox && make install-helm deploy-demo
-      - run: export GOOGLE_APPLICATION_CREDENTIALS=/root/demo/gcp-key.json && cd deployment-demo && export env=staging-sandbox && make install-helm deploy-demo
-
   test_demo_servers_up:
     docker:
         - image: google/cloud-sdk:latest
@@ -176,13 +158,9 @@ workflows:
           requires:
             - build_and_push_demo_image
           <<: *filter_master
-      - deploy_demo:
-          requires:
-            - build_and_push_demo_image
-          <<: *filter_master
       - test_demo_servers_up:
           requires:
-            - deploy_demo
+            - deploy_demo_argo
           <<: *filter_master
       - notify_slack:
           requires:

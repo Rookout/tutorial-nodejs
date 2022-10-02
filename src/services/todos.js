@@ -1,6 +1,7 @@
 /* eslint prefer-destructuring: 0 no-console: 0 */
 const utils = require('./utils');
 const winston = require('winston');
+
 const logger = winston.loggers.add({ transports: [new winston.transports.Console()] });
 
 const actionResult = (ok, message, errorCode = null, errorMessage = null) => ({
@@ -166,6 +167,18 @@ const clearCompleted = async (req) => {
 };
 
 
+const removeAll = async (req) => {
+  logger.debug('clear all todos request was received', { req });
+  await global.Store.ClearAll()
+    .then(null, (err) => {
+      if (err) {
+        logger.error(err);
+      }
+    });
+  logger.info('Cleared all  todos');
+  return actionResult(true, 'Cleared all  todos');
+};
+
 module.exports = {
   getAll,
   add,
@@ -174,4 +187,5 @@ module.exports = {
   duplicate,
   toggleAll,
   clearCompleted,
+  removeAll,
 };

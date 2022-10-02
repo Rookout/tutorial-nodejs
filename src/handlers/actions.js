@@ -53,6 +53,10 @@ const clearCompletedTodos = async (req, res) => {
   return performAction(clearCompletedAction)(req, res);
 };
 
+const removeAllTodos = async (req, res) => {
+  const clearALl = req => todos.removeAll(req);
+  return performAction(clearALl)(req, res);
+};
 
 module.exports = {
   getAllTodos,
@@ -62,4 +66,5 @@ module.exports = {
   duplicateTodo,
   toggleAllTodos,
   clearCompletedTodos,
+  removeAllTodos,
 };

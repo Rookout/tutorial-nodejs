@@ -13,6 +13,7 @@ router.get('/filter/:shown', HomePageHandlers.homePage);
 router.get('/todos', ActionsHandlers.getAllTodos);
 router.post('/todos', ActionsHandlers.addTodo);
 router.put('/todos/:id', ActionsHandlers.updateTodo);
+router.delete('/todos/removeAll', ActionsHandlers.removeAllTodos);
 router.delete('/todos/:id', ActionsHandlers.deleteTodo);
 router.post('/todos/:id/duplicate', ActionsHandlers.duplicateTodo);
 router.delete('/todos', ActionsHandlers.clearCompletedTodos);

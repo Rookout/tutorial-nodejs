@@ -7,6 +7,7 @@ const setEventListeners = () => {
   $('.toggle').on('change', onUpdateTodo);
   $('.toggle-all').on('change', onToggleAll);
   $('.clear-completed').on('click', onClearCompleted);
+  $('.clear-all-items').on('click', clearAllItems);
 };
 
 $(document).ready(() => {

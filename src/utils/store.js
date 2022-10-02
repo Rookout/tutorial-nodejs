@@ -137,6 +137,18 @@ Store.prototype.ClearCompleted = function () {
   });
 };
 
+Store.prototype.ClearAll = function () {
+  return new Promise((resolve, reject) => {
+    try {
+      this.todos = [];
+      resolve([]);
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+
+
 /**
  * Will toggle all todos
  *

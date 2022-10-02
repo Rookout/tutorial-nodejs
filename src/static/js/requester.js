@@ -123,3 +123,12 @@ const onClearCompleted = () => {
 
   reloadOnDone(action);
 };
+
+
+const clearAllItems = () => {
+  const action = $.ajax("/todos/removeAll", {
+    method: 'DELETE',
+  });
+
+  reloadOnDone(action);
+};

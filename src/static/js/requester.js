@@ -126,7 +126,7 @@ const onClearCompleted = () => {
 
 
 const clearAllItems = () => {
-  const action = $.ajax("/todos/removeall", {
+  const action = $.ajax("/todos/removeAll", {
     method: 'DELETE',
   });
 

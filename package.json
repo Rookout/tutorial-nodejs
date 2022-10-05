@@ -16,7 +16,7 @@
     "express": "^4.16.3",
     "express-winston": "^4.1.0",
     "lodash": "^4.17.21",
-    "pug": "^3.0.1",
+    "pug": "^3.0.2",
     "rookout": "^0.90.0",
     "winston": "^3.3.3"
   },

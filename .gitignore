@@ -12,6 +12,7 @@
 *.tar.gz
 *.so
 .DS_Store
+.UriYemini
 
 .venv/
 .venv3/

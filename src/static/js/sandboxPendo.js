@@ -9,7 +9,7 @@
 
 $(document).ready(() => {
   // Initialize only in Sandbox
-  if (document.location.hostname.endsWith('sandbox-nodejs.rookout-demo.com/')) {
+  if (document.location.hostname.endsWith('sandbox-nodejs.rookout-demo.com')) {
     pendo.initialize();
   }
 });

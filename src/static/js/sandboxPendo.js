@@ -9,7 +9,8 @@
 
 $(document).ready(() => {
   // Initialize only in Sandbox
-  if (document.location.hostname.endsWith('sandbox.nodejs.demo.rookout.com')) {
+  const sandboxUrlPattern = new RegExp(/sandbox-nodejs(?:\.[a-zA-Z]+)?\.rookout-demo\.com$/);
+  if (document.location.hostname.match(sandboxUrlPattern)) {
     pendo.initialize();
   }
 });

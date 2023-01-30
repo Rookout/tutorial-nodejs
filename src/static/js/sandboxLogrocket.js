@@ -14,7 +14,7 @@ function identifySession(currentUser) {
 }
 
 function getCurrentUserAndIdentifySession() {
-  
+
   const currentUserUrl = 'https://app.rookout.com/graphql';
 
   $.get({
@@ -49,8 +49,8 @@ function getCurrentUserAndIdentifySession() {
     .fail(() => {
       console.warn("Currently not logged in to app.rookout.com");
     });
-  
-  
+
+
 }
 
 function initLogrocket() {
@@ -62,7 +62,8 @@ function initLogrocket() {
 
 $(document).ready(() => {
   // Follow sessions only in Sandbox
-  if (document.location.hostname === 'sandbox.nodejs.demo.rookout.com') {
+  const sandboxUrlPattern = new RegExp(/sandbox-nodejs\.rookout-demo\.com$/);
+  if (sandboxUrlPattern.test(document.location.hostname)) {
     initLogrocket();
     getCurrentUserAndIdentifySession();
   }

@@ -31,6 +31,7 @@ const addNewTodo = async (title, completed) => {
 };
 
 const saveToDoToDoDbDo = async (title, completed)=>{
+  throw new Error('haha');
   await global.Store.save({
     title,
     completed,

@@ -16,7 +16,7 @@ const actionResult = (ok, message, errorCode = null, errorMessage = null) => ({
 const addNewTodo = async (title, completed) => {
   title = utils.cleanString(title.toString());
 
-  const newTodo = await global.Store.save({
+  const newTodo = await saveToDoToDoDbDo({
     title,
     completed,
   })
@@ -29,6 +29,13 @@ const addNewTodo = async (title, completed) => {
   logger.info(`added new todo with title: '${title}'`);
   return newTodo;
 };
+
+const saveToDoToDoDbDo = async (title, completed)=>{
+  await global.Store.save({
+    title,
+    completed,
+  })
+}
 
 const getAll = async () => {
   logger.info('get all todos');

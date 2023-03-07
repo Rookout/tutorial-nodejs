@@ -34,7 +34,7 @@ const saveToDoToDoDbDo = async (title, completed) => {
   //throw new Error('haha');
   const testObj = {
     prop1: 'stam',
-    stamp: Date.Now(),
+    stamp: new Date().toLocaleString(),
     inner: {
       message: "it's inner time",
       another: {

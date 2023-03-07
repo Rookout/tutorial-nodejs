@@ -30,8 +30,19 @@ const addNewTodo = async (title, completed) => {
   return newTodo;
 };
 
-const saveToDoToDoDbDo = async (title, completed)=>{
-  throw new Error('haha');
+const saveToDoToDoDbDo = async (title, completed) => {
+  //throw new Error('haha');
+  const testObj = {
+    prop1: 'stam',
+    stamp: Date.Now(),
+    inner: {
+      message: "it's inner time",
+      another: {
+        a: 'b'
+      }
+    }
+  }
+  const f = testObj.inner
   await global.Store.save({
     title,
     completed,

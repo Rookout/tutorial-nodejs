@@ -18,8 +18,10 @@ router.delete('/todos/:id', ActionsHandlers.deleteTodo);
 router.post('/todos/:id/duplicate', ActionsHandlers.duplicateTodo);
 router.delete('/todos', ActionsHandlers.clearCompletedTodos);
 router.post('/todos/toggleall', ActionsHandlers.toggleAllTodos);
+const globalvar = 'globalvar';
 router.get('/test', (req, res) => {
-    console.log('test will work')
+    const localvar = 'localvar'
+    console.log(`test will work and here is global ${globalvar}, or local ${localvar}`)
 })
 
 

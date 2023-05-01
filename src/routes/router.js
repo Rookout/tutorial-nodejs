@@ -19,8 +19,8 @@ router.post('/todos/:id/duplicate', ActionsHandlers.duplicateTodo);
 router.delete('/todos', ActionsHandlers.clearCompletedTodos);
 router.post('/todos/toggleall', ActionsHandlers.toggleAllTodos);
 router.get('/test', (req, res) => {
-    const localvar = 'localvar'
-    const localvar2 = 'localvar2'
+    const localvar = 'local-value1'
+    const localvar2 = 'local-value2'
     console.log(`test will work and here is my var ${localvar} and another ${localvar2}`)
 })
 

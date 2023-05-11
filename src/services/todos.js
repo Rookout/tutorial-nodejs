@@ -102,7 +102,7 @@ const update = async (req) => {
 };
 
 const remove = async (req) => {
-  logger.debug('todo removal request was received', { req });
+  logger.warn('todo removal request was received', { req });
   const todoId = req.params.id;
 
   if (!todoId) {

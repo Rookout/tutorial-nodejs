@@ -16,7 +16,7 @@ podCreator.initMain(label: label) {
                     env.TAG = "latest"
                 }
                 else {
-                    env.TAG= env.GIT_BRANCH
+                    env.TAG= env.GIT_BRANCH.replaceAll('/|_|+', '-')
                 }
 
                 def scriptToUse = libraryResource 'generate_tests.groovy'

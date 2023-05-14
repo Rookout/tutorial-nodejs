@@ -13,14 +13,12 @@ podCreator.initMain(label: label) {
                 env.REPO_NAME = "tutorial-nodejs"
 
                 if ("master".equals(env.GIT_BRANCH)) {
-                    def image_tag = "latest"
+                    env.TAG = "latest"
                 }
                 else {
-                    def image_tag = env.GIT_BRANCH
+                    env.TAG= env.GIT_BRANCH
                 }
 
-                println(image_tag)
-                
                 def scriptToUse = libraryResource 'generate_tests.groovy'
                 def jobName = "tutorial-nodejs"
                 def dockerTag = TestUtilities.getDockerTagNameForRegression(jobName)
@@ -28,7 +26,7 @@ podCreator.initMain(label: label) {
                               repo: env.REPO_NAME,
                               imageName: "regression-test-tutorial-nodejs",
                               imageRepo: "us-central1-docker.pkg.dev/rookoutdevelopment/development-images",
-                              imageTag: dockerTag,
+                              imageTag: env.TAG,
                               dockerfile: "Dockerfile",
                               requestCpu:"300m",
                               requestMemory:'500Mi')

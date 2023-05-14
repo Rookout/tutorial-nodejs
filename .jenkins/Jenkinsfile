@@ -13,31 +13,26 @@ podCreator.initMain(label: label) {
                 env.REPO_NAME = "tutorial-nodejs"
 
                 if ("master".equals(env.GIT_BRANCH)) {
-                    env.TAG = "latest"
-                }
-                else {
-                    env.TAG= env.GIT_BRANCH.replaceAll('[^a-zA-Z0-9_.]', '-')
-                }
-
-                def scriptToUse = libraryResource 'generate_tests.groovy'
-                def jobName = "tutorial-nodejs"
-                def dockerTag = TestUtilities.getDockerTagNameForRegression(jobName)
-                podCreator.initKaniko(branch: env.GIT_BRANCH,
-                              repo: env.REPO_NAME,
-                              imageName: "regression-test-tutorial-nodejs",
-                              imageRepo: "us-central1-docker.pkg.dev/rookoutdevelopment/development-images",
-                              imageTag: env.TAG,
-                              subPath: "/",
-                              dockerfile: "Dockerfile",
-                              requestCpu:"300m",
-                              requestMemory:'500Mi')
-                TestUtilities.createTest(this, scriptToUse, jobName, pwd() + "/.jenkins", "Jenkinsfile.test")
-                stage ('Run the tests') {
-                    def packageJsonData = readJSON file: pwd() + "/package.json"
-                    println(packageJsonData)
-                    def rookotVersionInFile = packageJsonData["dependencies"]["rookout"].replace("^","")
-                    println(rookotVersionInFile)
-                    triggerer.regressionEx(GIT_BRANCH : "Rooks/NodeJS-v${rookotVersionInFile}", GIT_REPO: "NodeRook", LANGUAGE_TO_RUN: "node", EXTRACT_VERSION_FROM_BRANCH: true ){
+                    def scriptToUse = libraryResource 'generate_tests.groovy'
+                    def jobName = "tutorial-nodejs"
+                    def dockerTag = TestUtilities.getDockerTagNameForRegression(jobName)
+                    podCreator.initKaniko(branch: env.GIT_BRANCH,
+                                  repo: env.REPO_NAME,
+                                  imageName: "regression-test-tutorial-nodejs",
+                                  imageRepo: "us-central1-docker.pkg.dev/rookoutdevelopment/development-images",
+                                  imageTag: "latest",
+                                  subPath: "/",
+                                  dockerfile: "Dockerfile",
+                                  requestCpu:"300m",
+                                  requestMemory:'500Mi')
+                    TestUtilities.createTest(this, scriptToUse, jobName, pwd() + "/.jenkins", "Jenkinsfile.test")
+                    stage ('Run the tests') {
+                        def packageJsonData = readJSON file: pwd() + "/package.json"
+                        println(packageJsonData)
+                        def rookotVersionInFile = packageJsonData["dependencies"]["rookout"].replace("^","")
+                        println(rookotVersionInFile)
+                        triggerer.regressionEx(GIT_BRANCH : "Rooks/NodeJS-v${rookotVersionInFile}", GIT_REPO: "NodeRook", LANGUAGE_TO_RUN: "node", EXTRACT_VERSION_FROM_BRANCH: true ){
+                        }
                     }
                 }
             }

@@ -10,7 +10,7 @@ podCreator.initMain(label: label) {
             stage ('Getting test') {
                 def myRepo = checkout scm
                 env.GIT_BRANCH = myRepo.GIT_BRANCH
-                env.REPO_NAME = myRepo.GIT_REPO
+                env.REPO_NAME = "tutorial-nodejs"
 
                 if ("master".equals(env.GIT_BRANCH)) {
                     def dockerTag = "latest"

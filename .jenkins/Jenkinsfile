@@ -14,7 +14,14 @@ podCreator.initMain(label: label) {
                 def scriptToUse = libraryResource 'generate_tests.groovy'
                 def jobName = "tutorial-nodejs"
                 def dockerTag = TestUtilities.getDockerTagNameForRegression(jobName)
-                sh("docker build . -t ${dockerTag} --build-arg GIT_COMMIT=\$(git rev-parse HEAD) --build-arg GIT_ORIGIN=\$(git config --get remote.origin.url) && gcloud docker -- push ${dockerTag}")
+                podCreator.initKaniko(branch: env.GIT_BRANCH,
+                              repo: env.REPO_NAME,
+                              imageName: "regression-test-tutorial-nodejs",
+                              imageRepo: "us-central1-docker.pkg.dev/rookoutdevelopment/development-images",
+                              imageTag: "latest",
+                              dockerfile: "Dockerfile",
+                              requestCpu:"300m",
+                              requestMemory:'500Mi')
                 TestUtilities.createTest(this, scriptToUse, jobName, pwd() + "/.jenkins", "Jenkinsfile.test")
                 stage ('Run the tests') {
                     def packageJsonData = readJSON file: pwd() + "/package.json"

@@ -13,12 +13,14 @@ podCreator.initMain(label: label) {
                 env.REPO_NAME = "tutorial-nodejs"
 
                 if ("master".equals(env.GIT_BRANCH)) {
-                    def dockerTag = "latest"
+                    def image_tag = "latest"
                 }
                 else {
-                    def dockerTag = env.GIT_BRANCH
+                    def image_tag = env.GIT_BRANCH
                 }
 
+                println(image_tag)
+                
                 def scriptToUse = libraryResource 'generate_tests.groovy'
                 def jobName = "tutorial-nodejs"
                 def dockerTag = TestUtilities.getDockerTagNameForRegression(jobName)

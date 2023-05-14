@@ -27,6 +27,7 @@ podCreator.initMain(label: label) {
                               imageName: "regression-test-tutorial-nodejs",
                               imageRepo: "us-central1-docker.pkg.dev/rookoutdevelopment/development-images",
                               imageTag: env.TAG,
+                              subPath: "/",
                               dockerfile: "Dockerfile",
                               requestCpu:"300m",
                               requestMemory:'500Mi')

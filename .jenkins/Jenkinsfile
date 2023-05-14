@@ -8,9 +8,17 @@ podCreator.initMain(label: label) {
         print(pwd())
         container('rookout-helm') {
             stage ('Getting test') {
-            def myRepo = checkout scm
-            env.GIT_BRANCH = myRepo.GIT_BRANCH.replaceAll('/|_', '-')
-            if ("master".equals(env.GIT_BRANCH)) {
+                def myRepo = checkout scm
+                env.GIT_BRANCH = myRepo.GIT_BRANCH
+                env.REPO_NAME = myRepo.GIT_REPO
+
+                if ("master".equals(env.GIT_BRANCH)) {
+                    def dockerTag = "latest"
+                }
+                else {
+                    def dockerTag = env.GIT_BRANCH
+                }
+
                 def scriptToUse = libraryResource 'generate_tests.groovy'
                 def jobName = "tutorial-nodejs"
                 def dockerTag = TestUtilities.getDockerTagNameForRegression(jobName)
@@ -18,7 +26,7 @@ podCreator.initMain(label: label) {
                               repo: env.REPO_NAME,
                               imageName: "regression-test-tutorial-nodejs",
                               imageRepo: "us-central1-docker.pkg.dev/rookoutdevelopment/development-images",
-                              imageTag: "latest",
+                              imageTag: dockerTag,
                               dockerfile: "Dockerfile",
                               requestCpu:"300m",
                               requestMemory:'500Mi')
@@ -32,10 +40,7 @@ podCreator.initMain(label: label) {
                     }
                 }
             }
-            
         }
-    }
-
     }
 }
 

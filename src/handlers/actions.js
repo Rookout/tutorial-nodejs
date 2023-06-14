@@ -19,7 +19,7 @@ const performAction = action => async (req, res) => {
 };
 
 const immitateBpHighLoad = () => {
-  for (var i = 0; i++; i < 1000) {
+  for (var i = 0; i < 1000; i++) { 
     console.log('1');
     console.log('2');
     console.log('3');

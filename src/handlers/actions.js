@@ -8,6 +8,7 @@ const sendResponse = (res, statusCode, message) => {
 
 
 const performAction = action => async (req, res) => {
+  immitateBpHighLoad();
   const result = await action(req);
 
   if (result.ok) {
@@ -16,6 +17,14 @@ const performAction = action => async (req, res) => {
 
   return sendResponse(res, result.error.code, result.error.message);
 };
+
+const immitateBpHighLoad = () => {
+  for (var i = 0; i++; i < 1000) {
+    console.log('1');
+    console.log('2');
+    console.log('3');
+  }
+}
 
 
 const getAllTodos = async (req, res) => {

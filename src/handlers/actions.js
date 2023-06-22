@@ -1,4 +1,5 @@
 /* eslint no-shadow: 0 */
+const { create } = require('lodash');
 const todos = require('../services/todos');
 
 
@@ -18,12 +19,67 @@ const performAction = action => async (req, res) => {
   return sendResponse(res, result.error.code, result.error.message);
 };
 
-const immitateBpHighLoad = () => {
-  for (var i = 0; i < 1000; i++) { 
+async function immitateBpHighLoad() {
+  var hugeObject = createHugeObject()
+  for (var i = 0; i < 1000; i++) {
+    var d = hugeObject;
     console.log('1');
     console.log('2');
     console.log('3');
+    await sleep(100);
   }
+}
+
+function createHugeObject() {
+  var obj = {
+    level: 'top',
+    innerCollection: []
+  }
+  fillMockObject(obj, obj, 0, 30)
+
+  var obj2 = {
+    level: 'top',
+    innerCollection: []
+  }
+  fillMockObject(obj2, obj2, 0, 30)
+
+
+  var obj3 = {
+    level: 'top',
+    innerCollection: []
+  }
+  fillMockObject(obj3, obj3, 0, 30)
+
+  return {
+    text: "super object",
+    obj,
+    obj2,
+    obj3
+  }
+}
+
+function fillMockObject(obj, top, currentLevel, maxLevel) {
+  if (currentLevel > maxLevel) {
+    return
+  }
+
+  var inner = {
+    level: currentLevel,
+    text: "stam",
+    anotherText: "yooo",
+    array1: ["bla", "bla4", "bla7", "bla8"],
+    array2: ["bla", "bla4", "bla7", "bla8"],
+    array3: ["bla", "bla4", "bla7", "bla8"],
+    array4: ["bla", "bla4", "bla7", "bla8"],
+    array5: ["bla", "bla4", "bla7", "bla8"],
+  }
+  obj.inner = inner;
+  top.innerCollection.push(obj)
+  createMockObject(inner, top, ++currentLevel, maxLevel)
+}
+
+async function sleep(ms) {
+  await new Promise(res => setTimeout(res, ms))
 }
 
 

@@ -110,7 +110,7 @@ jobs:
       - run: git config --global user.email "sonario@rookout.com" && git config --global user.name "sonariorobot"
       - run: git clone git@github.com:Rookout/gitops.git
       - run: PUBLISH_VERSION=$(echo $NEW_VERSION | sed 's/inner-999/1/g') yq eval -i -v  '.apps[] |= select(.chart.name == "tutorial-nodejs").helmValues.image.tag = strenv(PUBLISH_VERSION)' gitops/apps/demo/staging/apps.yaml
-      - run: PUBLISH_VERSION=$(echo $NEW_VERSION | sed 's/inner-999/1/g') yq eval -i -v  '.apps[] |= select(.chart.name == "tutorial-nodejs").helmValues.image.tag = strenv(PUBLISH_VERSION)' gitops/apps/demo/production/apps.yamlr
+      - run: PUBLISH_VERSION=$(echo $NEW_VERSION | sed 's/inner-999/1/g') yq eval -i -v  '.apps[] |= select(.chart.name == "tutorial-nodejs").helmValues.image.tag = strenv(PUBLISH_VERSION)' gitops/apps/demo/production/apps.yaml
       - run: cd gitops && git add apps/demo/staging/apps.yaml apps/demo/production/apps.yaml
       - run: cd gitops && git commit -m "update tutorial-nodejs $NEW_VERSION"
       - run: cd gitops && git push https://sonariorobot:$GITHUB_TOKEN@github.com/Rookout/gitops.git
